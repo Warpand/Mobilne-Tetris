@@ -1,0 +1,6 @@
+.gradle
+.idea
+.github
+app/build
+local.properties
+
