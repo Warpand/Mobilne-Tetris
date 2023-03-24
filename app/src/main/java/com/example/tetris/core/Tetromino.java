@@ -73,12 +73,12 @@ public class Tetromino {
 
     private static final int[] boundingBoxSizeMap = {0, 4, 3, 3, 2, 3, 3, 3};
     private static final int[] yTranslationMap = {0, -2, -2, -2, -1, -2, -2, -2};
-    public static Tetromino getTetromino(int x, int y, int type) {
+    public static Tetromino spawnTetromino(int type) {
         if(MIN_TETROMINO_TYPE > type || type > MAX_TETROMINO_TYPE)
             throw new IllegalArgumentException("Illegal tetromino type");
         Tetromino result = new Tetromino(
-                x - (boundingBoxSizeMap[type] - 1) / 2,
-                y + yTranslationMap[type],
+                Constants.boardWidth / 2 - (boundingBoxSizeMap[type] - 1) / 2,
+                Constants.boardHeight - 1 + yTranslationMap[type],
                 boundingBoxSizeMap[type],
                 type
         );

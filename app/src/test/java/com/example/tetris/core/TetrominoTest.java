@@ -9,24 +9,24 @@ import java.util.List;
 public class TetrominoTest {
     @Test
     public void testGetType() {
-        Tetromino t = Tetromino.getTetromino(0, 0, 6);
+        Tetromino t = Tetromino.spawnTetromino(6);
         assertEquals(6, t.getType());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructionThrowsWhenTypeTooLow() {
-        Tetromino.getTetromino(0, 0, Tetromino.MIN_TETROMINO_TYPE - 1);
+        Tetromino.spawnTetromino(Tetromino.MIN_TETROMINO_TYPE - 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructionThrowsWhenTypeTooHigh() {
-        Tetromino.getTetromino(0, 0, Tetromino.MAX_TETROMINO_TYPE + 1);
+        Tetromino.spawnTetromino(Tetromino.MAX_TETROMINO_TYPE + 1);
     }
 
     @Test
     public void testMoveUpAfterMoveDownDoesNothing() {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++) {
-            Tetromino t = Tetromino.getTetromino(0, 0, i);
+            Tetromino t = Tetromino.spawnTetromino(i);
             List<Pair> before = t.getBlocks();
             t.moveDown();
             t.moveUp();
@@ -38,7 +38,7 @@ public class TetrominoTest {
     @Test
     public void testRotateLeftAfterRotateRightDoesNothing() {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++) {
-            Tetromino t = Tetromino.getTetromino(0, 0, i);
+            Tetromino t = Tetromino.spawnTetromino(i);
             List<Pair> before = t.getBlocks();
             t.rotateRight();
             t.rotateLeft();
@@ -50,7 +50,7 @@ public class TetrominoTest {
     @Test
     public void testRotateRightAfterRotateLeftDoesNothing() {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++) {
-            Tetromino t = Tetromino.getTetromino(0, 0, i);
+            Tetromino t = Tetromino.spawnTetromino(i);
             List<Pair> before = t.getBlocks();
             t.rotateLeft();
             t.rotateRight();
@@ -62,7 +62,7 @@ public class TetrominoTest {
     @Test
     public void moveLeftAfterMoveRightDoesNothing() {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++) {
-            Tetromino t = Tetromino.getTetromino(0, 0, i);
+            Tetromino t = Tetromino.spawnTetromino(i);
             List<Pair> before = t.getBlocks();
             t.moveRight();
             t.moveLeft();
@@ -74,7 +74,7 @@ public class TetrominoTest {
     @Test
     public void moveRightAfterMoveLeftDoesNothing() {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++) {
-            Tetromino t = Tetromino.getTetromino(0, 0, i);
+            Tetromino t = Tetromino.spawnTetromino(i);
             List<Pair> before = t.getBlocks();
             t.moveLeft();
             t.moveRight();

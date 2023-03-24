@@ -45,7 +45,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
     }
 
     private void getNewTetromino() {
-        currentTetromino = Tetromino.getTetromino(Constants.boardWidth / 2, Constants.boardHeight - 1, gen.get());
+        currentTetromino = Tetromino.spawnTetromino(gen.get());
     }
 
     private void endGame() {

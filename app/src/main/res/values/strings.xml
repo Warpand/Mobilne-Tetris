@@ -2,4 +2,6 @@
     <string name="app_name">Tetris</string>
     <string name="single_player">Single Player</string>
     <string name="initScoreViewText">Score:\n0</string>
+    <string name="duel">Duel</string>
+    <string name="scores">Scores</string>
 </resources>

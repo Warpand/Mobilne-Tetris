@@ -42,7 +42,7 @@ public class TetrominoView extends androidx.appcompat.widget.AppCompatImageView 
 
     static {
         for(int i = Tetromino.MIN_TETROMINO_TYPE; i <= Tetromino.MAX_TETROMINO_TYPE; i++)
-            imageReference[i] = Tetromino.getTetromino(0, squaresH - 1, i);
+            imageReference[i] = Tetromino.spawnTetromino(i);
     }
 
     public TetrominoView(Context context) {

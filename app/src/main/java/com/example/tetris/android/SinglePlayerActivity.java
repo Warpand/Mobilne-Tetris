@@ -40,7 +40,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     private final SensorEventListener sensorEventListener = new SensorEventListener() {
         private static final int neutralPoseDelay = 1;
         private static final int tiltedPoseDelay = 4;
-        private static final double threshold = 27d;
+        private static final double threshold = 25d;
         private final float[] rotationMatrixBuffer = new float[16];
         private final float[] remappedRotationBuffer = new float[16];
         private final float[] orientationsBuffer = new float[3];
