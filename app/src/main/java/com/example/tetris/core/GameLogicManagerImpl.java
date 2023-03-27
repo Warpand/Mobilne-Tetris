@@ -28,7 +28,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private boolean isStateIllegal() {
         Iterable<Pair> blocks = currentTetromino.getBlocks();
         for(Pair p : blocks) {
-            if(p.y < 0 || p.x < 0 || p.x >= Constants.boardWidth || board[p.x][p.y])
+            if(p.y < 0 || p.x < 0 || p.x >= Constants.boardWidth || p.y >= Constants.boardHeight ||
+                    board[p.x][p.y])
                 return true;
         }
         return false;
@@ -73,7 +74,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     @Override
     public void moveLeft() {
-        if(pause)
+        if(pause || done)
             return;
         currentTetromino.moveLeft();
         if(isStateIllegal())
@@ -82,7 +83,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     @Override
     public void moveRight() {
-        if(pause)
+        if(pause || done)
             return;
         currentTetromino.moveRight();
         if(isStateIllegal())
@@ -91,7 +92,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     @Override
     public void rotateRight() {
-        if(pause)
+        if(pause || done)
             return;
         currentTetromino.rotateRight();
         if(isStateIllegal())
@@ -100,7 +101,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     @Override
     public void rotateLeft() {
-        if(pause)
+        if(pause || done)
             return;
         currentTetromino.rotateLeft();
         if(isStateIllegal())
