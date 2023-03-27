@@ -20,6 +20,8 @@ public class GameDrawingManagerImpl implements GameDrawingManager {
         this.logicManager = logicManager;
         myCanvas = new Canvas();
         paint = new Paint();
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(80f);
     }
 
     private float translateWidth(int w) {
@@ -64,6 +66,11 @@ public class GameDrawingManagerImpl implements GameDrawingManager {
         myCanvas.drawLine(0, h -Constants.speedUpThreshold * tileH, w,
                 h - Constants.speedUpThreshold * tileH, paint);
         paint.setColor(Color.BLACK);
+        if(logicManager.isGameOver()) {
+            paint.setColor(Color.RED);
+            myCanvas.drawText("GAME OVER", w / 2f, h / 2f, paint);
+            paint.setColor(Color.BLACK);
+        }
         canvas.drawBitmap(bitmap, 0, 0, paint);
     }
 
