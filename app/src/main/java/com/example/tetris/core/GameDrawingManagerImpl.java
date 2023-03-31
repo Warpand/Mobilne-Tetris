@@ -63,14 +63,13 @@ public class GameDrawingManagerImpl implements GameDrawingManager {
         for(float y = 0; y < h; y += tileH)
             myCanvas.drawLine(0, y, w, y, paint);
         paint.setColor(Color.YELLOW);
-        myCanvas.drawLine(0, h -Constants.speedUpThreshold * tileH, w,
+        myCanvas.drawLine(0, h - Constants.speedUpThreshold * tileH, w,
                 h - Constants.speedUpThreshold * tileH, paint);
-        paint.setColor(Color.BLACK);
         if(logicManager.isGameOver()) {
             paint.setColor(Color.RED);
             myCanvas.drawText("GAME OVER", w / 2f, h / 2f, paint);
-            paint.setColor(Color.BLACK);
         }
+        paint.setColor(Color.BLACK);
         canvas.drawBitmap(bitmap, 0, 0, paint);
     }
 
