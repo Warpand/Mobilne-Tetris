@@ -25,7 +25,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory();
         gameEngine = factory.produce();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotationSensor = new RotationGyroscope(sensorManager, gameEngine);
+        rotationSensor = new RotationGyroscope(sensorManager, gameEngine, true);
 
         SinglePlayerActivityBinding binding = SinglePlayerActivityBinding.inflate(getLayoutInflater());
         gameEngine.registerObserver(binding.scoreText);

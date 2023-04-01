@@ -3,7 +3,6 @@ package com.example.tetris.android;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.util.Log;
 
 import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEvent;
@@ -20,12 +19,19 @@ public class RotationGyroscope implements RotationSensor {
 
     private float x = neutralPoseDelay;
 
+    private final boolean selfCalibrating;
+    private double prevD = 0;
+    private static final float selfCalibrationDelay = 1.0f;
+    private float selfCalibrationCooldown = selfCalibrationDelay;
+    private static final double selfCalibrationThreshold = 1.0;
+
     private final Sensor sensor;
     private final GameEngine gameEngine;
 
-    RotationGyroscope(SensorManager sensorManager, GameEngine gameEngine) {
+    RotationGyroscope(SensorManager sensorManager, GameEngine gameEngine, boolean selfCalibrating) {
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         this.gameEngine = gameEngine;
+        this.selfCalibrating = selfCalibrating;
     }
 
     private void getQuaternion(float[] v, float dt) {
@@ -52,11 +58,8 @@ public class RotationGyroscope implements RotationSensor {
         sensorManager.unregisterListener(this);
     }
 
-    /*
-     * Idea: if the z-rotation doesn't change much for a while, set the position as neutral
-     * (set posVector = {0, 1, 0}, or maybe just posVector[2] = 0}
-     */
 
+    // float dlog = 0.0f;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float dt = (sensorEvent.timestamp - timestamp) * ns2s;
@@ -71,10 +74,13 @@ public class RotationGyroscope implements RotationSensor {
                 posVector[0] * rotationMatrix[2] + posVector[1] * rotationMatrix[5] + posVector[2] * rotationMatrix[8]
         };
 
-        // double xd = Math.toDegrees(Math.asin(posVector[1]));
-        // double yd = Math.toDegrees(Math.asin(posVector[2]));
-        double d = Math.toDegrees(Math.asin(posVector[0]));
-        // Log.d("AZIMUTH", String.valueOf(d));
+        double sin = posVector[0] / Math.sqrt(posVector[0] * posVector[0] + posVector[1] * posVector[1]);
+        double d = Math.toDegrees(Math.asin(sin));
+        /*dlog -= dt;
+        if(dlog <= 0) {
+            Log.d("AZIMUTH", String.valueOf(d));
+            dlog = 1;
+        }*/
         if(Math.abs(d) > threshold) {
             x -= dt;
             if(x > 0)
@@ -86,8 +92,19 @@ public class RotationGyroscope implements RotationSensor {
                 gameEngine.registerEvent(new GameEvent.RotateLeftEvent());
         }
         else {
+            if(selfCalibrating && Math.abs(d - prevD) < selfCalibrationThreshold) {
+                selfCalibrationCooldown -= dt;
+                if(selfCalibrationCooldown <= 0) {
+                    selfCalibrationCooldown = selfCalibrationDelay;
+                    posVector = new float[]{0, 1, 0};
+                }
+            }
+            else {
+                selfCalibrationCooldown = selfCalibrationDelay;
+            }
             x = neutralPoseDelay;
         }
+        prevD = d;
     }
 
     @Override
