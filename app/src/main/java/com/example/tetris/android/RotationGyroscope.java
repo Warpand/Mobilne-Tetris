@@ -15,7 +15,7 @@ public class RotationGyroscope implements RotationSensor {
     private float[] posVector = {0, 1, 0};
     private final float[] quaternion = new float[4];
     private float timestamp = 0.0f;
-    private static final float ns2s = 1.0f / 1000000000.0f;
+    private static final float ns2s = 1e-9f;
 
     private float x = neutralPoseDelay;
 
@@ -23,7 +23,8 @@ public class RotationGyroscope implements RotationSensor {
     private double prevD = 0;
     private static final float selfCalibrationDelay = 1.0f;
     private float selfCalibrationCooldown = selfCalibrationDelay;
-    private static final double selfCalibrationThreshold = 1.0;
+    private static final double selfCalibrationMaxDelta = 1.0;
+    private static final double selfCalibrationThreshold = 9.0;
 
     private final Sensor sensor;
     private final GameEngine gameEngine;
@@ -83,24 +84,25 @@ public class RotationGyroscope implements RotationSensor {
         }*/
         if(Math.abs(d) > threshold) {
             x -= dt;
-            if(x > 0)
-                return;
-            x = tiltedPoseDelay;
-            if(d < 0)
-                gameEngine.registerEvent(new GameEvent.RotateRightEvent());
-            else if(d > 0)
-                gameEngine.registerEvent(new GameEvent.RotateLeftEvent());
+            if(x <= 0) {
+                x = tiltedPoseDelay;
+                if (d < 0)
+                    gameEngine.registerEvent(new GameEvent.RotateRightEvent());
+                else if (d > 0)
+                    gameEngine.registerEvent(new GameEvent.RotateLeftEvent());
+            }
         }
         else {
-            if(selfCalibrating && Math.abs(d - prevD) < selfCalibrationThreshold) {
-                selfCalibrationCooldown -= dt;
-                if(selfCalibrationCooldown <= 0) {
-                    selfCalibrationCooldown = selfCalibrationDelay;
-                    posVector = new float[]{0, 1, 0};
+            if(selfCalibrating) {
+                if(Math.abs(d - prevD) < selfCalibrationMaxDelta && Math.abs(d) < selfCalibrationThreshold) {
+                    selfCalibrationCooldown -= dt;
+                    if(selfCalibrationCooldown <= 0) {
+                        selfCalibrationCooldown = selfCalibrationDelay;
+                        posVector = new float[]{0, 1, 0};
+                    }
                 }
-            }
-            else {
-                selfCalibrationCooldown = selfCalibrationDelay;
+                else
+                    selfCalibrationCooldown = selfCalibrationDelay;
             }
             x = neutralPoseDelay;
         }

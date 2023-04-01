@@ -4,6 +4,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private static final int movementDelay = 1000 / (int)Constants.millisecondsPerFrame;
     private final TetrominoGenerator gen;
     private final BoardGravityManager gravityManager;
+    private final ScoreCounter scoreCounter;
     private final boolean[][] board;
     private Tetromino currentTetromino;
     private int toNextMove;
@@ -16,6 +17,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
     public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager) {
         this.gen = gen;
         this.gravityManager = gravityManager;
+        scoreCounter = gravityManager.getAssociatedScoreCounter();
         board = new boolean[Constants.boardWidth][Constants.boardHeight];
         getNewTetromino();
         toNextMove = movementDelay;
@@ -36,7 +38,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
     }
 
     private void checkRows() {
-         score += gravityManager.checkBoard(board);
+         int deleted = gravityManager.checkBoard(board);
+         score += scoreCounter.rowsToScore(deleted);
     }
 
     private void placeTetromino() {

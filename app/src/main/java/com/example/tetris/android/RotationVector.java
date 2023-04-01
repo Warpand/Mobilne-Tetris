@@ -8,14 +8,16 @@ import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEvent;
 
 public class RotationVector implements RotationSensor {
-    private static final int neutralPoseDelay = 1;
-    private static final int tiltedPoseDelay = 4;
+    private static final float neutralPoseDelay = 0.2f;
+    private static final float tiltedPoseDelay = 0.8f;
+    private static final float ns2s = 1e-9f;
     private static final double threshold = 15d;
 
     private final float[] rotationMatrixBuffer = new float[9];
     private final float[] remappedRotationBuffer = new float[9];
     private final float[] orientationsBuffer = new float[3];
-    private int x = neutralPoseDelay;
+    private float x = neutralPoseDelay;
+    private float timestamp = 0f;
     private final Sensor sensor;
     private final GameEngine gameEngine;
     RotationVector(SensorManager sensorManager, GameEngine gameEngine) {
@@ -24,7 +26,7 @@ public class RotationVector implements RotationSensor {
     }
     @Override
     public void register(SensorManager sensorManager) {
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
@@ -34,6 +36,8 @@ public class RotationVector implements RotationSensor {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        final float dt = (sensorEvent.timestamp - timestamp) * ns2s;
+        timestamp = sensorEvent.timestamp;
         SensorManager.getRotationMatrixFromVector(rotationMatrixBuffer, sensorEvent.values);
         SensorManager.remapCoordinateSystem(
                 rotationMatrixBuffer,
@@ -44,8 +48,8 @@ public class RotationVector implements RotationSensor {
         SensorManager.getOrientation(remappedRotationBuffer, orientationsBuffer);
         double d = Math.toDegrees(orientationsBuffer[2]);
         if(Math.abs(d) > threshold) {
-            x--;
-            if(x != 0)
+            x -= dt;
+            if(x > 0)
                 return;
             x = tiltedPoseDelay;
             if (d > 0)

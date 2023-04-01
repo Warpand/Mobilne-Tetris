@@ -1,7 +1,6 @@
 package com.example.tetris.core;
 
 public class OriginalGravityManager implements BoardGravityManager {
-    private static final int[] pointsMap = {0, 40, 100, 300, 1200};
     private boolean checkRow(int j, boolean[][] board) {
         boolean r = true;
         for (boolean[] column : board)
@@ -24,6 +23,20 @@ public class OriginalGravityManager implements BoardGravityManager {
             else
                 j++;
         }
-        return pointsMap[deleted];
+        return deleted;
+    }
+
+    @Override
+    public ScoreCounter getAssociatedScoreCounter() {
+        return new OriginalScoreCounter();
+    }
+
+    public static class OriginalScoreCounter implements ScoreCounter {
+        private static final int[] pointsMap = {0, 40, 100, 300, 1200};
+
+        @Override
+        public int rowsToScore(int deletedRows) {
+            return pointsMap[deletedRows];
+        }
     }
 }

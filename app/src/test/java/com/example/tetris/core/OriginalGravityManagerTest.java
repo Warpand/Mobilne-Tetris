@@ -2,6 +2,7 @@ package com.example.tetris.core;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -17,8 +18,8 @@ public class OriginalGravityManagerTest {
         };
         OriginalGravityManager m = new OriginalGravityManager();
         boolean[][] before = board.clone();
-        int score = m.checkBoard(board);
-        assertEquals(0, score);
+        int deleted = m.checkBoard(board);
+        assertEquals(0, deleted);
         assertArrayEquals(before, board);
     }
 
@@ -39,8 +40,8 @@ public class OriginalGravityManagerTest {
                 {true, false, false, false, false},
                 {false, false, false, false, false}
         };
-        int score = m.checkBoard(board);
-        assertEquals(40, score);
+        int deleted = m.checkBoard(board);
+        assertEquals(1, deleted);
         assertArrayEquals(expected, board);
     }
     
@@ -61,8 +62,8 @@ public class OriginalGravityManagerTest {
                 {false, false, false, false, false},
                 {false, false, false, false, false}
         };
-        int score = m.checkBoard(board);
-        assertEquals(100, score);
+        int deleted = m.checkBoard(board);
+        assertEquals(2, deleted);
         assertArrayEquals(expected, board);
     }
 
@@ -78,8 +79,8 @@ public class OriginalGravityManagerTest {
         OriginalGravityManager m = new OriginalGravityManager();
         boolean[][] expected = new boolean[5][5];
         expected[0][0] = true;
-        int score = m.checkBoard(board);
-        assertEquals(300, score);
+        int deleted = m.checkBoard(board);
+        assertEquals(3, deleted);
         assertArrayEquals(expected, board);
     }
 
@@ -93,8 +94,15 @@ public class OriginalGravityManagerTest {
                 {true, true, true, true, false}
         };
         OriginalGravityManager m = new OriginalGravityManager();
-        int score = m.checkBoard(board);
-        assertEquals(1200, score);
+        int deleted = m.checkBoard(board);
+        assertEquals(4, deleted);
         assertArrayEquals(new boolean[5][5], board);
+    }
+
+    @Test
+    public void testGetAssociatedScoreCounter() {
+        OriginalGravityManager m = new OriginalGravityManager();
+        ScoreCounter c = m.getAssociatedScoreCounter();
+        assertTrue(c instanceof OriginalGravityManager.OriginalScoreCounter);
     }
 }
