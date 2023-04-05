@@ -28,6 +28,10 @@
             tools:ignore="LockedOrientationActivity">
         </activity>
 
+        <activity
+            android:name=".android.SettingsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
     </application>
 
 </manifest>

@@ -19,11 +19,15 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         Button[] buttons = {binding.singlePlayerButton};
-        Intent[] buttonIntents = {new Intent(this, SinglePlayerActivity.class)};
+        Intent[] buttonIntents = {
+                new Intent(this, SinglePlayerActivity.class)
+        };
         for(int i = 0; i < buttons.length; i++) {
             final Intent currIntent = buttonIntents[i];
             buttons[i].setOnClickListener(view -> view.getContext().startActivity(currIntent));
         }
+
+        binding.settingsButton.setOnClickListener(view -> view.getContext().startActivity(new Intent(this, SettingsActivity.class)));
 
         // temp
         final String msg = "Available in the future";
