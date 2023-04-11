@@ -2,7 +2,7 @@ package com.example.tetris.core;
 
 import java.util.Random;
 
-public class SinglePlayerTetrominoGenerator implements TetrominoGenerator{
+public class SinglePlayerTetrominoGenerator implements TetrominoGenerator {
     private final Random gen;
     private int next;
 

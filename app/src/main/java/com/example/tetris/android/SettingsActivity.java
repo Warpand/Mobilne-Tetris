@@ -28,6 +28,18 @@ public class SettingsActivity extends AppCompatActivity {
                 settings.setTiltDetectorType(Settings.tiltDetectorType.GYROSCOPE);
         });
 
+        if(settings.getGeneratorType() == Settings.generatorType.RANDOM)
+            binding.stdGeneratorButton.toggle();
+        else if(settings.getGeneratorType() == Settings.generatorType.SEQUENCE_RANDOM)
+            binding.sequenceGeneratorButton.toggle();
+
+        binding.generatorRadioGroup.setOnCheckedChangeListener(((radioGroup, i) -> {
+            if(i == binding.stdGeneratorButton.getId())
+                settings.setGeneratorType(Settings.generatorType.RANDOM);
+            else if(i == binding.sequenceGeneratorButton.getId())
+                settings.setGeneratorType(Settings.generatorType.SEQUENCE_RANDOM);
+        }));
+
         binding.saveButton.setOnClickListener(view -> settings.save(getApplicationContext()));
 
         setContentView(binding.getRoot());

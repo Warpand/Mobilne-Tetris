@@ -9,4 +9,7 @@
     <string name="rotation_vector">Rotation Vector</string>
     <string name="gyroscope">Gyroscope</string>
     <string name="save">Save</string>
+    <string name="random">Random</string>
+    <string name="random_sequence">Random Sequence</string>
+    <string name="tetromino_generator">Tetromino Generator</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEngineFactory;
 import com.example.tetris.core.GameEvent;
+import com.example.tetris.core.Settings;
 import com.example.tetris.databinding.SinglePlayerActivityBinding;
 
 
@@ -22,12 +23,13 @@ public class SinglePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory();
+        Settings settings = new Settings(getApplicationContext());
+        GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory(settings);
         gameEngine = factory.produce();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        // rotationSensor = new RotationGyroscope(sensorManager, gameEngine, true);
-        rotationSensor = new RotationVector(sensorManager, gameEngine);
-
+        rotationSensor = settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_VECTOR ?
+                new RotationVector(sensorManager, gameEngine) :
+                new RotationGyroscope(sensorManager, gameEngine, true);
         SinglePlayerActivityBinding binding = SinglePlayerActivityBinding.inflate(getLayoutInflater());
         gameEngine.registerObserver(binding.scoreText);
         gameEngine.registerObserver(binding.tetrominoView);

@@ -26,6 +26,7 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/tilt_detector_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tilt_detector"
@@ -33,6 +34,37 @@
         android:layout_alignTop="@+id/tilt_detector_radio_group"
         android:layout_alignBottom="@+id/tilt_detector_radio_group"
         android:layout_marginStart="50dp" />
+
+    <RadioGroup
+        android:id="@+id/generator_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tilt_detector_radio_group"
+        android:layout_alignStart="@id/tilt_detector_radio_group">
+
+        <RadioButton
+            android:id="@+id/std_generator_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/random" />
+
+        <RadioButton
+            android:id="@+id/sequence_generator_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/random_sequence" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tetromino_generator_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tetromino_generator"
+        android:gravity="center"
+        android:layout_alignTop="@+id/generator_radio_group"
+        android:layout_alignBottom="@+id/generator_radio_group"
+        android:layout_alignStart="@+id/tilt_detector_text_view" />
 
     <Button
         android:id="@+id/save_button"
