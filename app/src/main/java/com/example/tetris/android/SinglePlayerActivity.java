@@ -13,7 +13,6 @@ import com.example.tetris.core.GameEvent;
 import com.example.tetris.core.Settings;
 import com.example.tetris.databinding.SinglePlayerActivityBinding;
 
-
 public class SinglePlayerActivity extends AppCompatActivity {
     private GameEngine gameEngine;
     private SensorManager sensorManager;
