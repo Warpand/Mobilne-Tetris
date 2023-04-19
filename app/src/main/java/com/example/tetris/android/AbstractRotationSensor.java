@@ -13,7 +13,7 @@ public abstract class AbstractRotationSensor implements RotationSensor {
     private static final double threshold = 15d;
 
     private float timeToRotate = neutralPoseDelay;
-    private float timestamp = 0.0f;
+    private long timestamp = 0;
 
     private final Sensor sensor;
     private final GameEngine gameEngine;
@@ -23,8 +23,10 @@ public abstract class AbstractRotationSensor implements RotationSensor {
         this.gameEngine = gameEngine;
     }
 
-    protected void handleTiltAndTimestamp(double tilt, float eventTimestamp) {
-        float dt = (eventTimestamp - timestamp) * ns2s;
+    protected void handleTiltAndTimestamp(double tilt, long eventTimestamp) {
+        // the documentation doesn't disclose if event.timestamp is time since registration
+        // or some arbitrary number
+        float dt = (timestamp != 0) ? (eventTimestamp - timestamp) * ns2s : 0.0f;
         timestamp = eventTimestamp;
         if(Math.abs(tilt) > threshold) {
             timeToRotate -= dt;
@@ -49,6 +51,7 @@ public abstract class AbstractRotationSensor implements RotationSensor {
     @Override
     public void unregister(SensorManager sensorManager) {
         sensorManager.unregisterListener(this);
+        timestamp = 0;
     }
 
     @Override

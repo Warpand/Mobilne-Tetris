@@ -20,16 +20,28 @@ public class RotationRelative extends AbstractRotationSensor {
     public void onSensorChanged(SensorEvent sensorEvent) {
         SensorManager.getRotationMatrixFromVector(rotationMatrixBuffer, sensorEvent.values);
         if (prevRotationMatrix == null) {
+            // first event is used to set up the initial rotation...
             prevRotationMatrix = rotationMatrixBuffer.clone();
+            handleTiltAndTimestamp(0.0, sensorEvent.timestamp);
             return;
         }
         SensorManager.getAngleChange(angleChangeBuffer, rotationMatrixBuffer, prevRotationMatrix);
         prevRotationMatrix = rotationMatrixBuffer.clone();
         if (!calibrated) {
+            // ... but for some reason the rotation between first and second event is about
+            // 90 degrees, if the second event is used as initial rotation everything works fine
             calibrated = true;
+            handleTiltAndTimestamp(0.0d, sensorEvent.timestamp);
             return;
         }
         azimuth += angleChangeBuffer[0];
         handleTiltAndTimestamp(Math.toDegrees(azimuth), sensorEvent.timestamp);
+    }
+
+    @Override
+    public void unregister(SensorManager sensorManager) {
+        prevRotationMatrix = null;
+        calibrated = false;
+        super.unregister(sensorManager);
     }
 }
