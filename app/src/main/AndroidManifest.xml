@@ -32,6 +32,10 @@
             android:name=".android.SettingsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+        <activity
+            android:name=".android.ScoresActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
     </application>
 
 </manifest>

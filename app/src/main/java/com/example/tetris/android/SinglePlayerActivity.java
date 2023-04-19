@@ -1,5 +1,6 @@
 package com.example.tetris.android;
 
+import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Window;
@@ -23,13 +24,14 @@ public class SinglePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        Settings settings = new Settings(getApplicationContext());
-        GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory(settings);
+        Context appContext = getApplicationContext();
+        Settings settings = new Settings(appContext);
+        GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory(settings, appContext);
         gameEngine = factory.produce();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotationSensor = settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_VECTOR ?
                 new RotationVector(sensorManager, gameEngine) :
-                new RotationGyroscope(sensorManager, gameEngine, true);
+                new RotationGyroscope(sensorManager, gameEngine, false);
         SinglePlayerActivityBinding binding = SinglePlayerActivityBinding.inflate(getLayoutInflater());
         gameEngine.registerObserver(binding.scoreText);
         gameEngine.registerObserver(binding.tetrominoView);

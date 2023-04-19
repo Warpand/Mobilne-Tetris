@@ -1,27 +1,36 @@
 package com.example.tetris.core;
 
+import com.example.tetris.database.DataEntry;
+import com.example.tetris.database.EntryDao;
+
 public class GameLogicManagerImpl implements GameLogicManager {
     private static final int movementDelay = 1000 / (int)Constants.millisecondsPerFrame;
     private final TetrominoGenerator gen;
     private final BoardGravityManager gravityManager;
     private final ScoreCounter scoreCounter;
+    private final EntryDao dao;
     private final boolean[][] board;
     private Tetromino currentTetromino;
     private int toNextMove;
     private int score;
+    private int deletedRows;
+    private int moves;
 
     private boolean pause;
     private boolean done;
     private boolean speedUp;
 
-    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager) {
+    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager, EntryDao dao) {
         this.gen = gen;
         this.gravityManager = gravityManager;
         scoreCounter = gravityManager.getAssociatedScoreCounter();
+        this.dao = dao;
         board = new boolean[Constants.boardWidth][Constants.boardHeight];
         getNewTetromino();
         toNextMove = movementDelay;
         score = 0;
+        deletedRows = 0;
+        moves = 0;
         pause = false;
         done = false;
         speedUp = false;
@@ -39,6 +48,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     private void checkRows() {
          int deleted = gravityManager.checkBoard(board);
+         deletedRows += deleted;
          score += scoreCounter.rowsToScore(deleted);
     }
 
@@ -50,10 +60,13 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     private void getNewTetromino() {
         currentTetromino = Tetromino.spawnTetromino(gen.get());
+        moves++;
     }
 
     private void endGame() {
         done = true;
+        DataEntry dataEntry = new DataEntry(score, deletedRows, moves - 1);
+        dao.insert(dataEntry);
     }
 
     @Override

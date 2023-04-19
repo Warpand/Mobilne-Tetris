@@ -3,6 +3,7 @@ package com.example.tetris.android;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEvent;
@@ -60,7 +61,7 @@ public class RotationGyroscope implements RotationSensor {
     }
 
 
-    // float dlog = 0.0f;
+    float dlog = 0.0f;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float dt = (sensorEvent.timestamp - timestamp) * ns2s;
@@ -77,11 +78,11 @@ public class RotationGyroscope implements RotationSensor {
 
         double sin = posVector[0] / Math.sqrt(posVector[0] * posVector[0] + posVector[1] * posVector[1]);
         double d = Math.toDegrees(Math.asin(sin));
-        /*dlog -= dt;
+        dlog -= dt;
         if(dlog <= 0) {
             Log.d("AZIMUTH", String.valueOf(d));
             dlog = 1;
-        }*/
+        }
         if(Math.abs(d) > threshold) {
             x -= dt;
             if(x <= 0) {
