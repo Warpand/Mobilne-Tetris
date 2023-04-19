@@ -16,16 +16,16 @@ public class SettingsActivity extends AppCompatActivity {
         final Settings.SettingsWriter settings = new Settings.SettingsWriter(getApplicationContext());
         SettingsActivityBinding binding = SettingsActivityBinding.inflate(getLayoutInflater());
 
-        if(settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_VECTOR)
+        if(settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_RELATIVE)
             binding.rotationVectorButton.toggle();
-        else if(settings.getTiltDetectorType() == Settings.tiltDetectorType.GYROSCOPE)
+        else if(settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_ABSOLUTE)
             binding.gyroscopeButton.toggle();
 
         binding.tiltDetectorRadioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
             if(i == binding.rotationVectorButton.getId())
-                settings.setTiltDetectorType(Settings.tiltDetectorType.ROTATION_VECTOR);
+                settings.setTiltDetectorType(Settings.tiltDetectorType.ROTATION_RELATIVE);
             else if(i == binding.gyroscopeButton.getId())
-                settings.setTiltDetectorType(Settings.tiltDetectorType.GYROSCOPE);
+                settings.setTiltDetectorType(Settings.tiltDetectorType.ROTATION_ABSOLUTE);
         });
 
         if(settings.getGeneratorType() == Settings.generatorType.RANDOM)

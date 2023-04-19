@@ -16,13 +16,13 @@
             android:id="@+id/rotation_vector_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rotation_vector" />
+            android:text="@string/rotation_relative" />
 
         <RadioButton
             android:id="@+id/gyroscope_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gyroscope" />
+            android:text="@string/rotation_absolute" />
     </RadioGroup>
 
     <TextView

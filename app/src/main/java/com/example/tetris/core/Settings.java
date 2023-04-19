@@ -14,8 +14,8 @@ public class Settings {
 
     public interface tiltDetectorType {
         // this things should be one byte long;
-        int ROTATION_VECTOR = 0;
-        int GYROSCOPE = 1;
+        int ROTATION_RELATIVE = 0;
+        int ROTATION_ABSOLUTE = 1;
     }
 
     public interface generatorType {
@@ -24,7 +24,7 @@ public class Settings {
     }
 
     private static void fillWithDefault(FileOutputStream oS) throws IOException {
-        oS.write(tiltDetectorType.ROTATION_VECTOR);
+        oS.write(tiltDetectorType.ROTATION_RELATIVE);
         oS.write(generatorType.RANDOM);
     }
     private static FileInputStream createIfNotExist(Context context) throws IOException {

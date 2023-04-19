@@ -29,9 +29,9 @@ public class SinglePlayerActivity extends AppCompatActivity {
         GameEngineFactory factory = new GameEngineFactory.SinglePlayerEngineFactory(settings, appContext);
         gameEngine = factory.produce();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotationSensor = settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_VECTOR ?
-                new RotationVector(sensorManager, gameEngine) :
-                new RotationGyroscope(sensorManager, gameEngine, false);
+        rotationSensor = settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_RELATIVE ?
+                new RotationRelative(sensorManager, gameEngine) :
+                new RotationAbsolute(sensorManager, gameEngine);
         SinglePlayerActivityBinding binding = SinglePlayerActivityBinding.inflate(getLayoutInflater());
         gameEngine.registerObserver(binding.scoreText);
         gameEngine.registerObserver(binding.tetrominoView);

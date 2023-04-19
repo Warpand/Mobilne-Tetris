@@ -7,20 +7,26 @@ import android.hardware.SensorManager;
 import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEvent;
 
-public class RotationVector implements RotationSensor {
+public class RotationRelative implements RotationSensor {
     private static final float neutralPoseDelay = 0.2f;
     private static final float tiltedPoseDelay = 0.8f;
     private static final float ns2s = 1e-9f;
     private static final double threshold = 15d;
 
+    private float[] prevRotationMatrix = null;
     private final float[] rotationMatrixBuffer = new float[9];
-    private final float[] remappedRotationBuffer = new float[9];
-    private final float[] orientationsBuffer = new float[3];
+    private final float[] angleChangeBuffer = new float[3];
+
+    private float azimuth = 0.0f;
+
     private float x = neutralPoseDelay;
     private float timestamp = 0f;
     private final Sensor sensor;
     private final GameEngine gameEngine;
-    RotationVector(SensorManager sensorManager, GameEngine gameEngine) {
+
+    private boolean calibrated = false;
+
+    RotationRelative(SensorManager sensorManager, GameEngine gameEngine) {
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
         this.gameEngine = gameEngine;
     }
@@ -39,14 +45,19 @@ public class RotationVector implements RotationSensor {
         final float dt = (sensorEvent.timestamp - timestamp) * ns2s;
         timestamp = sensorEvent.timestamp;
         SensorManager.getRotationMatrixFromVector(rotationMatrixBuffer, sensorEvent.values);
-        SensorManager.remapCoordinateSystem(
-                rotationMatrixBuffer,
-                SensorManager.AXIS_X,
-                SensorManager.AXIS_Z,
-                remappedRotationBuffer
-        );
-        SensorManager.getOrientation(remappedRotationBuffer, orientationsBuffer);
-        double d = Math.toDegrees(orientationsBuffer[2]);
+        if(prevRotationMatrix == null) {
+            prevRotationMatrix = rotationMatrixBuffer.clone();
+            return;
+        }
+        SensorManager.getAngleChange(angleChangeBuffer, rotationMatrixBuffer, prevRotationMatrix);
+        prevRotationMatrix = rotationMatrixBuffer.clone();
+        if(!calibrated) {
+            calibrated = true;
+            return;
+        }
+        azimuth += angleChangeBuffer[0];
+        double d = Math.toDegrees(azimuth);
+
         if(Math.abs(d) > threshold) {
             x -= dt;
             if(x > 0)
