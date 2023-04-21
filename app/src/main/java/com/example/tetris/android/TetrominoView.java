@@ -56,6 +56,7 @@ public class TetrominoView extends androidx.appcompat.widget.AppCompatImageView 
     public TetrominoView(Context context, AttributeSet attributeSet, int defStyle) {
         super(context, attributeSet, defStyle);
     }
+    
     @Override
     public void notifyChange(GameInfoPackage infoPackage) {
         nextTetrominoId.set(infoPackage.getNextTetrominoId());
@@ -86,6 +87,7 @@ public class TetrominoView extends androidx.appcompat.widget.AppCompatImageView 
         super.onDraw(canvas);
         invalidate();
     }
+    
     private float translateWidth(int w) {
         return (w - minX) * tileW + marginLeft;
     }
@@ -93,6 +95,7 @@ public class TetrominoView extends androidx.appcompat.widget.AppCompatImageView 
     private float translateHeight(int h) {
         return (maxY - h) * tileH + marginTop;
     }
+    
     private void drawTetromino(int id) {
         int minX = 100, maxX = -100, minY = 100, maxY = -100;
         for(Pair p : imageReference[id].getBlocks()) {
