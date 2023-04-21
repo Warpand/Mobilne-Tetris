@@ -34,7 +34,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
         SinglePlayerActivityBinding binding = SinglePlayerActivityBinding.inflate(getLayoutInflater());
         gameEngine.registerObserver(binding.scoreText);
         gameEngine.registerObserver(binding.tetrominoView);
-        binding.pauseButton.setOnClickListener(view -> gameEngine.registerEvent(new GameEvent.PauseEvent()));
+        binding.pauseButton.setOnClickListener(new PauseButtonListener(gameEngine));
         binding.boardView.setGameEngine(gameEngine);
         setContentView(binding.getRoot());
     }

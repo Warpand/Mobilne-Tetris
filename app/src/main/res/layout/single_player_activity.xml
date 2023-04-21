@@ -34,6 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/initScoreViewText"
+        android:gravity="center"
+        android:fontFamily="sans-serif-black"
         app:layout_constraintBottom_toTopOf="@+id/boardView"
         app:layout_constraintEnd_toStartOf="@+id/pauseButton"
         app:layout_constraintHorizontal_bias="0.229"
