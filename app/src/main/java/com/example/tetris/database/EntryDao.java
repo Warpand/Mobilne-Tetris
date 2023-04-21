@@ -15,6 +15,6 @@ public interface EntryDao {
     @Query("select sum(deleted_rows) from dataentry")
     int getTotalDeletedRows();
 
-    @Query("select * from dataentry order by score limit 10")
+    @Query("select * from dataentry order by score desc limit 10")
     DataEntry[] getTopGames();
 }
