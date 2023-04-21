@@ -3,6 +3,7 @@ package com.example.tetris.core;
 import android.content.Context;
 
 import com.example.tetris.database.AppDatabase;
+import com.example.tetris.media.MediaHolder;
 
 public interface GameEngineFactory {
     GameEngine produce();
@@ -10,10 +11,14 @@ public interface GameEngineFactory {
     class SinglePlayerEngineFactory implements GameEngineFactory {
         private final Settings settings;
         private final Context appContext;
-        public SinglePlayerEngineFactory(Settings settings, Context appContext) {
+        private final MediaHolder media;
+
+        public SinglePlayerEngineFactory(Settings settings, Context appContext, MediaHolder media) {
             this.settings = settings;
             this.appContext = appContext;
+            this.media = media;
         }
+
         @Override
         public GameEngine produce() {
             GameLogicManager logicManager = new GameLogicManagerImpl(
@@ -21,7 +26,8 @@ public interface GameEngineFactory {
                             new SinglePlayerTetrominoGenerator() :
                             new SequenceTetrominoGenerator(),
                     new OriginalGravityManager(),
-                    AppDatabase.getDb(appContext).entryDao()
+                    AppDatabase.getDb(appContext).entryDao(),
+                    media.getSoundEffects()
             );
             GameDrawingManager drawingManager = new GameDrawingManagerImpl(logicManager);
             return new BasicGameEngine(logicManager, drawingManager);

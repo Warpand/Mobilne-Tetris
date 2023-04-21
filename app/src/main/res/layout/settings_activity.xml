@@ -40,8 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/tilt_detector_radio_group"
-        android:layout_alignStart="@id/tilt_detector_radio_group">
+        android:layout_below="@+id/tilt_detector_radio_group"
+        android:layout_alignStart="@+id/tilt_detector_radio_group">
 
         <RadioButton
             android:id="@+id/std_generator_button"
@@ -65,6 +65,38 @@
         android:layout_alignTop="@+id/generator_radio_group"
         android:layout_alignBottom="@+id/generator_radio_group"
         android:layout_alignStart="@+id/tilt_detector_text_view" />
+
+    <RadioGroup
+        android:id="@+id/sound_effects_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/generator_radio_group"
+        android:layout_alignStart="@+id/generator_radio_group">
+
+        <RadioButton
+            android:id="@+id/sound_effects_on_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/on" />
+
+        <RadioButton
+            android:id="@+id/sound_effects_off_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/off" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/sound_effects_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sound_effects"
+        android:gravity="center"
+        android:layout_alignTop="@+id/sound_effects_radio_group"
+        android:layout_alignBottom="@+id/sound_effects_radio_group"
+        android:layout_alignStart="@+id/tetromino_generator_text_view" />
 
     <Button
         android:id="@+id/save_button"

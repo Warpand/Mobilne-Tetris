@@ -23,9 +23,15 @@ public class Settings {
         int SEQUENCE_RANDOM = 1;
     }
 
+    public interface soundEffects {
+        int ON = 0;
+        int OFF = 1;
+    }
+
     private static void fillWithDefault(FileOutputStream oS) throws IOException {
         oS.write(tiltDetectorType.ROTATION_RELATIVE);
         oS.write(generatorType.RANDOM);
+        oS.write(soundEffects.ON);
     }
     private static FileInputStream createIfNotExist(Context context) throws IOException {
          try {
@@ -43,11 +49,13 @@ public class Settings {
 
     protected int tiltDetector;
     protected int generator;
+    protected int sound;
 
     public Settings(Context context) {
         try (FileInputStream iS = createIfNotExist(context)) {
             tiltDetector = iS.read();
             generator = iS.read();
+            sound = iS.read();
 
         } catch (Exception e) {
             Log.d("SETTINGS", "Unknown error while loading settings");
@@ -60,6 +68,10 @@ public class Settings {
 
     public int getGeneratorType() {
         return generator;
+    }
+
+    public int getSoundEffects() {
+        return sound;
     }
 
     public static class SettingsWriter extends Settings {
@@ -75,10 +87,13 @@ public class Settings {
             generator = type;
         }
 
+        public void setSoundEffects(int on_off) { sound = on_off; }
+
         public void save(Context context) {
             try(OutputStream oS = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
                 oS.write(tiltDetector);
                 oS.write(generator);
+                oS.write(sound);
             }
             catch (IOException e) {
                 Log.d("SETTINGS", "Unknown error while writing settings");

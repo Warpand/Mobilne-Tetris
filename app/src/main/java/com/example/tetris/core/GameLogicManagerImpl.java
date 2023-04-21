@@ -2,6 +2,7 @@ package com.example.tetris.core;
 
 import com.example.tetris.database.DataEntry;
 import com.example.tetris.database.EntryDao;
+import com.example.tetris.media.SoundEffectsPlayer;
 
 public class GameLogicManagerImpl implements GameLogicManager {
     private static final int movementDelay = 1000 / (int)Constants.millisecondsPerFrame;
@@ -9,6 +10,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private final BoardGravityManager gravityManager;
     private final ScoreCounter scoreCounter;
     private final EntryDao dao;
+
+    private final SoundEffectsPlayer sfx;
     private final boolean[][] board;
     private Tetromino currentTetromino;
     private int toNextMove;
@@ -20,11 +23,12 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private boolean done;
     private boolean speedUp;
 
-    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager, EntryDao dao) {
+    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager, EntryDao dao, SoundEffectsPlayer sfx) {
         this.gen = gen;
         this.gravityManager = gravityManager;
         scoreCounter = gravityManager.getAssociatedScoreCounter();
         this.dao = dao;
+        this.sfx = sfx;
         board = new boolean[Constants.boardWidth][Constants.boardHeight];
         getNewTetromino();
         toNextMove = movementDelay;
@@ -50,6 +54,10 @@ public class GameLogicManagerImpl implements GameLogicManager {
          int deleted = gravityManager.checkBoard(board);
          deletedRows += deleted;
          score += scoreCounter.rowsToScore(deleted);
+         if(deleted != 0)
+             sfx.play(SoundEffectsPlayer.DELETE_EFFECT);
+         else
+             sfx.play(SoundEffectsPlayer.PLACE_EFFECT);
     }
 
     private void placeTetromino() {
@@ -65,6 +73,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     private void endGame() {
         done = true;
+        sfx.play(SoundEffectsPlayer.GAME_OVER_EFFECT);
         DataEntry dataEntry = new DataEntry(score, deletedRows, moves - 1);
         dao.insert(dataEntry);
     }
@@ -95,6 +104,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
         currentTetromino.moveLeft();
         if(isStateIllegal())
             currentTetromino.moveRight();
+        else
+            sfx.play(SoundEffectsPlayer.MOVE_EFFECT);
     }
 
     @Override
@@ -104,6 +115,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
         currentTetromino.moveRight();
         if(isStateIllegal())
             currentTetromino.moveLeft();
+        else
+            sfx.play(SoundEffectsPlayer.MOVE_EFFECT);
     }
 
     @Override
@@ -113,6 +126,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
         currentTetromino.rotateRight();
         if(isStateIllegal())
             currentTetromino.rotateLeft();
+        else
+            sfx.play(SoundEffectsPlayer.ROTATE_EFFECT);
     }
 
     @Override
@@ -122,6 +137,8 @@ public class GameLogicManagerImpl implements GameLogicManager {
         currentTetromino.rotateLeft();
         if(isStateIllegal())
             currentTetromino.rotateRight();
+        else
+            sfx.play(SoundEffectsPlayer.ROTATE_EFFECT);
     }
 
     @Override
@@ -156,6 +173,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
 
     @Override
     public void setPause(boolean state) {
+        sfx.play(SoundEffectsPlayer.PAUSE_EFFECT);
         pause = state;
     }
 

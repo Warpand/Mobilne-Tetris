@@ -40,6 +40,18 @@ public class SettingsActivity extends AppCompatActivity {
                 settings.setGeneratorType(Settings.generatorType.SEQUENCE_RANDOM);
         }));
 
+        if(settings.getSoundEffects() == Settings.soundEffects.ON)
+            binding.soundEffectsOnButton.toggle();
+        else if(settings.getSoundEffects() == Settings.soundEffects.OFF)
+            binding.soundEffectsOffButton.toggle();
+
+        binding.soundEffectsRadioGroup.setOnCheckedChangeListener((((radioGroup, i) -> {
+            if(i == binding.soundEffectsOnButton.getId())
+                settings.setSoundEffects(Settings.soundEffects.ON);
+            else if(i == binding.soundEffectsOffButton.getId())
+                settings.setSoundEffects(Settings.soundEffects.OFF);
+        })));
+
         binding.saveButton.setOnClickListener(view -> settings.save(getApplicationContext()));
 
         setContentView(binding.getRoot());

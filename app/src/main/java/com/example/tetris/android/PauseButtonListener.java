@@ -7,14 +7,12 @@ import com.example.tetris.core.GameEvent;
 
 public class PauseButtonListener implements View.OnClickListener {
     private final GameEngine gameEngine;
-    private final int pauseImageId;
-    private final int resumeImageId;
+    private static final int pauseImageId = android.R.drawable.ic_media_pause;
+    private static final int resumeImageId = android.R.drawable.ic_media_play;
     private boolean paused = false;
 
     PauseButtonListener(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        pauseImageId = android.R.drawable.ic_media_pause;
-        resumeImageId = android.R.drawable.ic_media_play;
     }
 
     @Override

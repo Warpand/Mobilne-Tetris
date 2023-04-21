@@ -13,4 +13,7 @@
     <string name="random_sequence">Random Sequence</string>
     <string name="tetromino_generator">Tetromino Generator</string>
     <string name="scores_head_text">You have played * games\n in which you have deleted ? rows</string>
+    <string name="sound_effects">Sound Effects</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
 </resources>
