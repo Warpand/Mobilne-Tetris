@@ -16,6 +16,7 @@ public class RotationRelative extends AbstractRotationSensor {
     RotationRelative(SensorManager sensorManager, GameEngine gameEngine) {
         super(sensorManager, gameEngine);
     }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         SensorManager.getRotationMatrixFromVector(rotationMatrixBuffer, sensorEvent.values);
@@ -42,6 +43,7 @@ public class RotationRelative extends AbstractRotationSensor {
     public void unregister(SensorManager sensorManager) {
         prevRotationMatrix = null;
         calibrated = false;
+        azimuth = 0.0f;
         super.unregister(sensorManager);
     }
 }
