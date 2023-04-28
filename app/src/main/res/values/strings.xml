@@ -16,4 +16,8 @@
     <string name="sound_effects">Sound Effects</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="speed">Speed</string>
+    <string name="adjusting">Adjusting</string>
+    <string name="hard">Hard</string>
+    <string name="easy">Easy</string>
 </resources>

@@ -2,18 +2,18 @@ package com.example.tetris.android;
 
 import android.os.Bundle;
 import android.view.Window;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tetris.core.Settings;
 import com.example.tetris.databinding.SettingsActivityBinding;
 
 public class SettingsActivity extends AppCompatActivity {
+    private Settings.SettingsWriter settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        final Settings.SettingsWriter settings = new Settings.SettingsWriter(getApplicationContext());
+        settings = new Settings.SettingsWriter(getApplicationContext());
         SettingsActivityBinding binding = SettingsActivityBinding.inflate(getLayoutInflater());
 
         if(settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_RELATIVE)
@@ -50,6 +50,22 @@ public class SettingsActivity extends AppCompatActivity {
                 settings.setSoundEffects(Settings.soundEffects.ON);
             else if(i == binding.soundEffectsOffButton.getId())
                 settings.setSoundEffects(Settings.soundEffects.OFF);
+        })));
+
+        if(settings.getSpeed() == Settings.speedType.CONSTANT)
+            binding.speedConstantRadioButton.toggle();
+        else if(settings.getSpeed() == Settings.speedType.ADJUSTING)
+            binding.speedAdjustingRadioButton.toggle();
+        else if(settings.getSpeed() == Settings.speedType.CONSTANT_HARD)
+            binding.speedConstantHardRadioButton.toggle();
+
+        binding.speedRadioGroup.setOnCheckedChangeListener((((radioGroup, i) -> {
+            if(i == binding.speedConstantRadioButton.getId())
+                settings.setSpeed(Settings.speedType.CONSTANT);
+            else if(i == binding.speedAdjustingRadioButton.getId())
+                settings.setSpeed(Settings.speedType.ADJUSTING);
+            else if(i == binding.speedConstantHardRadioButton.getId())
+                settings.setSpeed(Settings.speedType.CONSTANT_HARD);
         })));
 
         binding.saveButton.setOnClickListener(view -> settings.save(getApplicationContext()));

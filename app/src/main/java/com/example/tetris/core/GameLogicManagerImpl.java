@@ -8,6 +8,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private static final int movementDelay = 1000 / (int)Constants.millisecondsPerFrame;
     private final TetrominoGenerator gen;
     private final BoardGravityManager gravityManager;
+    private final SpeedManager speedManager;
     private final ScoreCounter scoreCounter;
     private final EntryDao dao;
 
@@ -23,10 +24,11 @@ public class GameLogicManagerImpl implements GameLogicManager {
     private boolean done;
     private boolean speedUp;
 
-    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager, EntryDao dao, SoundEffectsPlayer sfx) {
+    public GameLogicManagerImpl(TetrominoGenerator gen, BoardGravityManager gravityManager, SpeedManager speedManager, EntryDao dao, SoundEffectsPlayer sfx) {
         this.gen = gen;
         this.gravityManager = gravityManager;
         scoreCounter = gravityManager.getAssociatedScoreCounter();
+        this.speedManager = speedManager;
         this.dao = dao;
         this.sfx = sfx;
         board = new boolean[Constants.boardWidth][Constants.boardHeight];
@@ -82,7 +84,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
     public void update() {
         if(done || pause)
             return;
-        toNextMove -= (speedUp) ? 5 : 1;
+        toNextMove -= speedManager.getSpeed(speedUp);
         if(toNextMove <= 0) {
             toNextMove = movementDelay;
             currentTetromino.moveDown();
@@ -90,6 +92,7 @@ public class GameLogicManagerImpl implements GameLogicManager {
                 currentTetromino.moveUp();
                 placeTetromino();
                 checkRows();
+                speedManager.adjust(score);
                 getNewTetromino();
                 if(isStateIllegal())
                     endGame();

@@ -26,6 +26,11 @@ public interface GameEngineFactory {
                             new SinglePlayerTetrominoGenerator() :
                             new SequenceTetrominoGenerator(),
                     new OriginalGravityManager(),
+                    settings.getSpeed() == Settings.speedType.ADJUSTING ?
+                            new SpeedManager.AdjustingSpeedManager() :
+                            settings.getSpeed() == Settings.speedType.CONSTANT ?
+                                    new SpeedManager.ConstantSpeedManager() :
+                                    new SpeedManager.ConstantSpeedManagerHard(),
                     AppDatabase.getDb(appContext).entryDao(),
                     media.getSoundEffects()
             );
