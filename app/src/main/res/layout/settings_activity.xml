@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RadioGroup
         android:id="@+id/tilt_detector_radio_group"
@@ -10,18 +10,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/settings_margin_right"
+        android:background="@drawable/rectangle_background"
+        android:padding="@dimen/settings_padding"
         tools:ignore="RelativeOverlap">
 
         <RadioButton
             android:id="@+id/rotation_vector_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/rotation_relative" />
 
         <RadioButton
             android:id="@+id/gyroscope_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/rotation_absolute" />
     </RadioGroup>
 
@@ -30,29 +35,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tilt_detector"
+        android:textSize="@dimen/settings_label_text_size"
+        android:textStyle="bold"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_background"
+        android:layout_toStartOf="@+id/tilt_detector_radio_group"
         android:layout_alignTop="@+id/tilt_detector_radio_group"
         android:layout_alignBottom="@+id/tilt_detector_radio_group"
-        android:layout_marginStart="50dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/settings_margin_left" />
 
     <RadioGroup
         android:id="@+id/generator_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/tilt_detector_radio_group"
         android:layout_below="@+id/tilt_detector_radio_group"
-        android:layout_alignStart="@+id/tilt_detector_radio_group">
+        android:layout_alignStart="@+id/tilt_detector_radio_group"
+        android:layout_marginTop="@dimen/settings_margin_between"
+        android:background="@drawable/rectangle_background"
+        android:padding="@dimen/settings_padding">
 
         <RadioButton
             android:id="@+id/std_generator_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/random" />
 
         <RadioButton
             android:id="@+id/sequence_generator_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/random_sequence" />
     </RadioGroup>
 
@@ -61,29 +77,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tetromino_generator"
+        android:textSize="@dimen/settings_label_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_background"
         android:gravity="center"
+        android:layout_toStartOf="@+id/generator_radio_group"
         android:layout_alignTop="@+id/generator_radio_group"
         android:layout_alignBottom="@+id/generator_radio_group"
-        android:layout_alignStart="@+id/tilt_detector_text_view" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/settings_margin_left" />
 
     <RadioGroup
         android:id="@+id/sound_effects_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/generator_radio_group"
         android:layout_below="@+id/generator_radio_group"
-        android:layout_alignStart="@+id/generator_radio_group">
+        android:layout_alignStart="@+id/generator_radio_group"
+        android:layout_marginTop="@dimen/settings_margin_between"
+        android:background="@drawable/rectangle_background"
+        android:padding="@dimen/settings_padding">
 
         <RadioButton
             android:id="@+id/sound_effects_on_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/on" />
 
         <RadioButton
             android:id="@+id/sound_effects_off_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/off" />
 
     </RadioGroup>
@@ -93,35 +120,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sound_effects"
+        android:textSize="@dimen/settings_label_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_background"
         android:gravity="center"
+        android:layout_toStartOf="@+id/sound_effects_radio_group"
         android:layout_alignTop="@+id/sound_effects_radio_group"
         android:layout_alignBottom="@+id/sound_effects_radio_group"
-        android:layout_alignStart="@+id/tetromino_generator_text_view" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/settings_margin_left" />
 
     <RadioGroup
         android:id="@+id/speed_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignEnd="@+id/sound_effects_radio_group"
         android:layout_below="@+id/sound_effects_radio_group"
-        android:layout_alignStart="@+id/sound_effects_radio_group">
+        android:layout_alignStart="@+id/sound_effects_radio_group"
+        android:layout_marginTop="@dimen/settings_margin_between"
+        android:background="@drawable/rectangle_background"
+        android:padding="@dimen/settings_padding">
 
         <RadioButton
             android:id="@+id/speed_constant_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/easy" />
 
         <RadioButton
             android:id="@+id/speed_constant_hard_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/hard" />
 
         <RadioButton
             android:id="@+id/speed_adjusting_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="@string/adjusting" />
 
     </RadioGroup>
@@ -131,17 +170,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/speed"
+        android:textSize="@dimen/settings_label_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@drawable/rectangle_background"
         android:gravity="center"
+        android:layout_toStartOf="@+id/speed_radio_group"
         android:layout_alignTop="@+id/speed_radio_group"
         android:layout_alignBottom="@+id/speed_radio_group"
-        android:layout_alignStart="@+id/sound_effects_text_view" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/settings_margin_left" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/speed_radio_group"
         android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/light_grey"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         android:text="@string/save" />
 
 </RelativeLayout>

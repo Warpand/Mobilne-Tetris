@@ -5,36 +5,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/background_grey"
     tools:context=".android.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:textStyle='bold'
+        android:textSize='100sp'
+        android:textColor='@color/black'
+        android:shadowColor="#FFFF00"
+        android:background="@drawable/round_background"
+        android:padding="20dp"
+        android:shadowDx='2'
+        android:shadowDy='-2'
+        android:shadowRadius='1.5'
        />
 
     <Button
         android:id="@+id/single_player_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey"
         android:text="@string/single_player" />
 
     <Button
         android:id="@+id/duel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey"
         android:text="@string/duel" />
 
     <Button
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey"
         android:text="@string/settings" />
 
     <Button
         android:id="@+id/scores_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey"
         android:text="@string/scores" />
 
 

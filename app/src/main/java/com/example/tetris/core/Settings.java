@@ -40,6 +40,7 @@ public class Settings {
         oS.write(soundEffects.ON);
         oS.write(speedType.CONSTANT);
     }
+
     private static FileInputStream createIfNotExist(Context context) throws IOException {
          try {
              FileInputStream iS = context.openFileInput(filename);

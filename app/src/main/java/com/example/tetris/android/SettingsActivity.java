@@ -8,12 +8,11 @@ import com.example.tetris.core.Settings;
 import com.example.tetris.databinding.SettingsActivityBinding;
 
 public class SettingsActivity extends AppCompatActivity {
-    private Settings.SettingsWriter settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        settings = new Settings.SettingsWriter(getApplicationContext());
+        final Settings.SettingsWriter settings = new Settings.SettingsWriter(getApplicationContext());
         SettingsActivityBinding binding = SettingsActivityBinding.inflate(getLayoutInflater());
 
         if(settings.getTiltDetectorType() == Settings.tiltDetectorType.ROTATION_RELATIVE)

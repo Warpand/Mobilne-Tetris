@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="frame_size">5dp</dimen>
+    <dimen name="settings_padding">6dp</dimen>
+    <dimen name="settings_margin_left">30dp</dimen>
+    <dimen name="settings_margin_right">20dp</dimen>
+    <dimen name="settings_margin_between">20dp</dimen>
+    <dimen name="settings_label_text_size">15sp</dimen>
+</resources>
