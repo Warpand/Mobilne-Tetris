@@ -21,4 +21,6 @@
     <string name="hard">Hard</string>
     <string name="easy">Easy</string>
     <string name="high_scores">High Scores:</string>
+    <string name="host">Host</string>
+    <string name="join">Join</string>
 </resources>

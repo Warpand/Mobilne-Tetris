@@ -19,17 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding.singlePlayerButton.setOnClickListener(view -> view.getContext().startActivity(
                 new Intent(this, SinglePlayerActivity.class)));
+        binding.duelButton.setOnClickListener(view -> view.getContext().startActivity(
+                new Intent(this, BluetoothConnectActivity.class)));
         binding.settingsButton.setOnClickListener(view -> view.getContext().startActivity(
                 new Intent(this, SettingsActivity.class)));
         binding.scoresButton.setOnClickListener(view -> view.getContext().startActivity(
                 new Intent(this, ScoresActivity.class)));
-
-        // temp
-        final String msg = "Available in the future";
-        binding.duelButton.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(view.getContext(), msg, Toast.LENGTH_SHORT);
-            toast.show();
-        });
 
         setContentView(binding.getRoot());
     }

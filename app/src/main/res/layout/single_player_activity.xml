@@ -11,7 +11,7 @@
         android:layout_height="604.5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -33,15 +33,15 @@
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/initScoreViewText"
-        android:gravity="center"
         android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="@string/initScoreViewText"
         app:layout_constraintBottom_toTopOf="@+id/boardView"
         app:layout_constraintEnd_toStartOf="@+id/pauseButton"
-        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintHorizontal_bias="0.207"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintVertical_bias="0.527" />
 
     <com.example.tetris.android.TetrominoView
         android:id="@+id/tetrominoView"
@@ -49,6 +49,7 @@
         android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/boardView"
         app:layout_constraintEnd_toStartOf="@+id/pauseButton"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toEndOf="@+id/scoreText"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
