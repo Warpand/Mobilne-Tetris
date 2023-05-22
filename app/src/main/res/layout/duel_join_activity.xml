@@ -7,12 +7,6 @@
     android:background="@color/background_grey">
 
     <Button
-        android:id="@+id/host_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/host" />
-
-    <Button
         android:id="@+id/join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

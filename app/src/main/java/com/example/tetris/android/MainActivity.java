@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.example.tetris.databinding.ActivityMainBinding;
 
@@ -19,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.singlePlayerButton.setOnClickListener(view -> view.getContext().startActivity(
                 new Intent(this, SinglePlayerActivity.class)));
-        binding.duelButton.setOnClickListener(view -> view.getContext().startActivity(
-                new Intent(this, BluetoothConnectActivity.class)));
+        binding.duelHostButton.setOnClickListener(view -> view.getContext().startActivity(
+                new Intent(this, DuelHostActivity.class)));
+        binding.duelJoinButton.setOnClickListener(view -> view.getContext().startActivity(
+                new Intent(this, DuelJoinActivity.class)));
         binding.settingsButton.setOnClickListener(view -> view.getContext().startActivity(
                 new Intent(this, SettingsActivity.class)));
         binding.scoresButton.setOnClickListener(view -> view.getContext().startActivity(

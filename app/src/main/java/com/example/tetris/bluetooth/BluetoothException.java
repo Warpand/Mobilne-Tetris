@@ -1,8 +1,19 @@
 package com.example.tetris.bluetooth;
 
 public class BluetoothException extends RuntimeException {
-    public static final String unknownErrorMsg = "Unknown Error";
-    public BluetoothException(String message) {
+    private final BluetoothError errorType;
+
+    public BluetoothException(BluetoothError errorType) {
+        super();
+        this.errorType = errorType;
+    }
+
+    public BluetoothException(BluetoothError errorType, String message) {
         super(message);
+        this.errorType = errorType;
+    }
+
+    public BluetoothError getErrorType() {
+        return errorType;
     }
 }

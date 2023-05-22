@@ -32,12 +32,20 @@
         android:text="@string/single_player" />
 
     <Button
-        android:id="@+id/duel_button"
+        android:id="@+id/duel_host_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:backgroundTint="@color/light_grey"
-        android:text="@string/duel" />
+        android:text="@string/duel_host" />
+
+    <Button
+        android:id="@+id/duel_join_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey"
+        android:text="@string/duel_join" />
 
     <Button
         android:id="@+id/settings_button"

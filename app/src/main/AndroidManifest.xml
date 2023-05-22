@@ -43,8 +43,9 @@
         <activity
             android:name=".android.ScoresActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".android.BluetoothConnectActivity"
+        <activity android:name=".android.DuelHostActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".android.DuelJoinActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <receiver
             android:name=".bluetooth.BluetoothDiscoveryReceiver"
