@@ -40,6 +40,8 @@ public abstract class AbstractBluetoothActivity extends AppCompatActivity {
         bluetoothAdapter = getSystemService(BluetoothManager.class).getAdapter();
     }
 
+
+
     protected void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
@@ -70,7 +72,6 @@ public abstract class AbstractBluetoothActivity extends AppCompatActivity {
     protected void turnEverythingOn() {
         checkPermissions();
         turnBluetoothOn();
-        // TO DO turn localisation on
     }
 
     protected void toastForError(BluetoothError error) {

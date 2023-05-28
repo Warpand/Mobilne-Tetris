@@ -24,4 +24,10 @@
     <string name="high_scores">High Scores:</string>
     <string name="host">Host</string>
     <string name="join">Join</string>
+    <string name="name">Name:</string>
+    <string name="mac">Mac:</string>
+    <string name="unknown">Unknown</string>
+    <string name="scan_info">Some devices might require turning the location on in order for the scan ot work properly.</string>
+    <string name="idle">SCANNING STATUS: IDLE</string>
+    <string name="scanning">SCANNING STATUS: IN PROGRESS</string>
 </resources>

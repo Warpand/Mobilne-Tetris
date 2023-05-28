@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/bluetooth_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:layout_alignParentStart="true">
+    </TextView>
+
+    <TextView
+        android:id="@+id/bluetooth_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/bluetooth_name_label">
+    </TextView>
+
+    <TextView
+        android:id="@+id/bluetooth_mac_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mac"
+        android:layout_below="@id/bluetooth_name_label"
+        android:layout_alignParentStart="true">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/bluetooth_device_mac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unknown"
+        android:layout_below="@id/bluetooth_device_name"
+        android:layout_alignStart="@id/bluetooth_device_name">
+    </TextView>
+
+    <Button
+        android:id="@+id/bluetooth_device_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/bluetooth_device_name"
+        android:layout_alignBottom="@id/bluetooth_device_mac"
+        android:layout_alignParentEnd="true"
+        android:text="@string/join">
+    </Button>
+</RelativeLayout>

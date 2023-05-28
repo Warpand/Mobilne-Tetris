@@ -17,10 +17,8 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
         binding.hostButton.setOnClickListener(
                 view -> {
                     turnEverythingOn();
-                    if(!bluetoothAdapter.isEnabled())
-                        return;
                     Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                    discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+                    discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
                     try {
                         startActivity(discoverableIntent);
                     }
@@ -36,6 +34,6 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        // maybe some toast?
     }
 }

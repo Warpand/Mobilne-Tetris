@@ -13,7 +13,7 @@ public class Settings {
     protected static final String filename = "settings";
 
     public interface tiltDetectorType {
-        // this things should be one byte long;
+        // these things should be one byte long;
         int ROTATION_RELATIVE = 0;
         int ROTATION_ABSOLUTE = 1;
     }

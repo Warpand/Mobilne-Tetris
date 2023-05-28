@@ -6,7 +6,10 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.tetris.bluetooth.BluetoothDiscoveryReceiver;
+import com.example.tetris.bluetooth.DevicesView;
 import com.example.tetris.databinding.DuelJoinActivityBinding;
 
 public class DuelJoinActivity extends AbstractBluetoothActivity {
@@ -15,20 +18,21 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receiver = new BluetoothDiscoveryReceiver();
+        DuelJoinActivityBinding binding = DuelJoinActivityBinding.inflate(getLayoutInflater());
+        DevicesView devicesView = new DevicesView();
+        receiver = new BluetoothDiscoveryReceiver(bluetoothAdapter, devicesView, binding.scanStateTextView);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(receiver, filter);
 
-        DuelJoinActivityBinding binding = DuelJoinActivityBinding.inflate(getLayoutInflater());
+        binding.bluetoothDevicesRecyclerView.setAdapter(devicesView);
+        binding.bluetoothDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         binding.joinButton.setOnClickListener(
                 view -> {
                     turnEverythingOn();
-                    if(!bluetoothAdapter.isEnabled())
-                        return;
                     try {
                         bluetoothAdapter.startDiscovery();
                     }
@@ -37,7 +41,6 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
                     }
                 }
         );
-
         setContentView(binding.getRoot());
     }
 
@@ -45,5 +48,11 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        try {
+            bluetoothAdapter.cancelDiscovery();
+        }
+        catch(SecurityException e) {
+            Log.e("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
+        }
     }
 }
