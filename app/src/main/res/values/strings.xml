@@ -2,8 +2,8 @@
     <string name="app_name">Tetris</string>
     <string name="single_player">Single Player</string>
     <string name="initScoreViewText">Score:\n0</string>
-    <string name="duel_host">Duel-Host</string>
-    <string name="duel_join">Duel-Join</string>
+    <string name="duel_host">Duel - Host</string>
+    <string name="duel_join">Duel - Join</string>
     <string name="settings">Settings</string>
     <string name="scores">Scores</string>
     <string name="tilt_detector">Tilt Detector</string>
@@ -27,7 +27,8 @@
     <string name="name">Name:</string>
     <string name="mac">Mac:</string>
     <string name="unknown">Unknown</string>
-    <string name="scan_info">Some devices might require turning the location on in order for the scan ot work properly.</string>
+    <string name="scan_info">Warning: some devices might require turning the location on in order for the scan to work properly.</string>
     <string name="idle">SCANNING STATUS: IDLE</string>
     <string name="scanning">SCANNING STATUS: IN PROGRESS</string>
+    <string name="scan">Scan</string>
 </resources>

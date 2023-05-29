@@ -10,6 +10,12 @@
         android:id="@+id/host_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/host" />
+        android:minWidth="160dp"
+        android:minHeight="80dp"
+        android:backgroundTint="@color/light_grey"
+        android:gravity="center"
+        android:text="@string/host"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

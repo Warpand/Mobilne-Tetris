@@ -15,13 +15,12 @@
         android:textStyle='bold'
         android:textSize='100sp'
         android:textColor='@color/black'
-        android:shadowColor="#FFFF00"
+        android:shadowColor="@color/yellow"
         android:background="@drawable/round_background"
         android:padding="20dp"
         android:shadowDx='2'
         android:shadowDy='-2'
-        android:shadowRadius='1.5'
-       />
+        android:shadowRadius='1.5' />
 
     <Button
         android:id="@+id/single_player_button"
@@ -62,6 +61,5 @@
         android:textColor="@color/black"
         android:backgroundTint="@color/light_grey"
         android:text="@string/scores" />
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -28,22 +29,21 @@ public class BluetoothDiscoveryReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) throws SecurityException {
         String action = intent.getAction();
-        if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            devicesView.addNewDevice(device);
+        }
+        else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
             devicesView.clear();
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
             if(pairedDevices.size() > 0)
                 devicesView.addMultipleDevices(pairedDevices);
-            /*Toast toast = Toast.makeText(context, "SCANNING STARTED", Toast.LENGTH_SHORT);
-            toast.show();*/
             statusTextView.setText(R.string.scanning);
-
-        } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-            /*Toast toast = Toast.makeText(context, "SCANNING FINISHED", Toast.LENGTH_SHORT);
-            toast.show();*/
+            statusTextView.setTextColor(Color.GREEN);
+        }
+        else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
             statusTextView.setText(R.string.idle);
-        } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            devicesView.addNewDevice(device);
+            statusTextView.setTextColor(Color.YELLOW);
         }
         else {
             Log.d("BluetoothDiscoveryReceiver",

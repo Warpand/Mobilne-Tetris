@@ -48,14 +48,9 @@ public class GameView extends View {
         int w = MeasureSpec.getSize(widthSpec);
         int h = MeasureSpec.getSize(heightSpec);
         if(gameBitmap == null) {
-            /*
-                it needs to be done here, not in constructor in order
-                to get the sizes
-             */
-            // Log.d("SIZE", String.valueOf(w) + ' ' + h);
             gameBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas gameCanvas = new Canvas(gameBitmap);
-            if(gameEngine != null) // this if is for AndroidStudio
+            if(gameEngine != null) // for AndroidStudio
                 gameEngine.setDrawingBuffer(gameCanvas, w, h);
             this.w = (float)w;
             this.h = (float)h;
@@ -73,16 +68,6 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_UP) {
-            /*
-             * initially type of action was if-ed in "hold down at the bottom to speed up" case,
-             * but it lead to a bug where you could touch the screen at the bottom, swipe up
-             * and release too high to be caught in the proper if branch again,
-             * causing the game to speed up without your finger being actually kept on the screen.
-             * Since "touch the screen higher to move left/right" case returns false, this event
-             * won't be produced in this case (even if it was, it wouldn't break anything)
-             * "hold down" case returns true, so it should always be followed up by this
-             * (... unless the onPause happened in between, but this is handled elsewhere)
-             */
             gameEngine.registerEvent(new GameEvent.SetSpeedEvent(false));
             return false;
         }
@@ -95,8 +80,6 @@ public class GameView extends View {
         else {
             // ... rest is for moving the tetromino
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                // the if above prevents the tetromino from moving if the screen was touched
-                // at the bottom, but then the finger was moved up
                 if (event.getX() < w / 2.0)
                     gameEngine.registerEvent(new GameEvent.LeftClickEvent());
                 else

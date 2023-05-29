@@ -6,10 +6,10 @@ import android.hardware.SensorManager;
 import com.example.tetris.core.GameEngine;
 
 public class RotationAbsolute extends AbstractRotationSensor {
-
     private final float[] rotationMatrixBuffer = new float[9];
     private final float[] remappedRotationBuffer = new float[9];
     private final float[] orientationsBuffer = new float[3];
+
     RotationAbsolute(SensorManager sensorManager, GameEngine gameEngine) {
         super(sensorManager, gameEngine);
     }

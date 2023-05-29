@@ -25,7 +25,7 @@ public abstract class AbstractRotationSensor implements RotationSensor {
 
     protected void handleTiltAndTimestamp(double tilt, long eventTimestamp) {
         // the documentation doesn't disclose if event.timestamp is time since registration
-        // or some arbitrary number, so the first event timestamp is used to initialize out timestamp
+        // or some arbitrary number, so the first event timestamp is used to initialize our timestamp
         float dt = (timestamp != 0) ? (eventTimestamp - timestamp) * ns2s : 0.0f;
         timestamp = eventTimestamp;
         if(Math.abs(tilt) > threshold) {

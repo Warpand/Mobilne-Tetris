@@ -13,21 +13,24 @@
         android:layout_height="wrap_content"
         android:text="@string/scan_info"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/warning_red"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/join"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/scan"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/light_grey" />
 
     <TextView
         android:id="@+id/scan_state_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/idle"
         android:gravity="center"
-        android:text="@string/idle" />
+        android:textColor="@color/yellow" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bluetooth_devices_recycler_view"
