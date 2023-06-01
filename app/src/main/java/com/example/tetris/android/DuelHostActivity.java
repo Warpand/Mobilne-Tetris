@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.tetris.bluetooth.BluetoothError;
 import com.example.tetris.databinding.DuelHostActivityBinding;
 
 public class DuelHostActivity extends AbstractBluetoothActivity {
@@ -16,7 +17,7 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
 
         binding.hostButton.setOnClickListener(
                 view -> {
-                    turnEverythingOn();
+                    checkPermissions();
                     Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
                     discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
                     try {
@@ -34,6 +35,7 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // maybe some toast?
+        if(resultCode == RESULT_CANCELED)
+            toastForError(BluetoothError.USER_DENIED_OPERATION);
     }
 }

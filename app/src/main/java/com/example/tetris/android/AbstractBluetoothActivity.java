@@ -83,6 +83,9 @@ public abstract class AbstractBluetoothActivity extends AppCompatActivity {
             case PERMISSION_DENIED:
                 text = "Necessary permissions denied.";
                 break;
+            case USER_DENIED_OPERATION:
+                text = "Accept the prompted operation in order to use this function.";
+                break;
         }
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();

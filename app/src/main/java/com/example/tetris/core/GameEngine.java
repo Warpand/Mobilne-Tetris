@@ -7,6 +7,5 @@ public interface GameEngine {
    void setDrawingBuffer(Canvas canvas, int w, int h);
    void registerEvent(GameEvent event);
    void stop();
-
    void registerObserver(GameObserver observer);
 }
