@@ -9,7 +9,6 @@ import android.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tetris.bluetooth.BluetoothDiscoveryReceiver;
-import com.example.tetris.bluetooth.DevicesView;
 import com.example.tetris.databinding.DuelJoinActivityBinding;
 
 public class DuelJoinActivity extends AbstractBluetoothActivity {
@@ -20,7 +19,7 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
         super.onCreate(savedInstanceState);
         DuelJoinActivityBinding binding = DuelJoinActivityBinding.inflate(getLayoutInflater());
         DevicesView devicesView = new DevicesView();
-        receiver = new BluetoothDiscoveryReceiver(bluetoothAdapter, devicesView, binding.scanStateTextView);
+        receiver = new BluetoothDiscoveryReceiver(devicesView, binding.scanStateTextView);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_FOUND);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);

@@ -1,7 +1,8 @@
-package com.example.tetris.bluetooth;
+package com.example.tetris.android;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tetris.R;
+import com.example.tetris.bluetooth.BluetoothConnect;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +55,14 @@ public class DevicesView extends RecyclerView.Adapter<DevicesView.DeviceRep> {
         catch (SecurityException e) {
             Log.e("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
         }
-        holder.joinButton.setOnClickListener(view -> {}); // TO DO
+        holder.joinButton.setOnClickListener(view -> {
+            BluetoothConnect connector = new BluetoothConnect(
+                    device,
+                    view.getContext(),
+                    new Intent(view.getContext(), MultiplayerJoinActivity.class)
+            );
+            connector.start();
+        });
     }
 
     @Override

@@ -10,18 +10,13 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.tetris.R;
-
-import java.util.Set;
+import com.example.tetris.android.DevicesView;
 
 public class BluetoothDiscoveryReceiver extends BroadcastReceiver {
-    private final BluetoothAdapter bluetoothAdapter;
     private final DevicesView devicesView;
     private final TextView statusTextView;
 
-    public BluetoothDiscoveryReceiver(BluetoothAdapter bluetoothAdapter,
-                                      DevicesView devicesView,
-                                      TextView statusTextView) {
-        this.bluetoothAdapter = bluetoothAdapter;
+    public BluetoothDiscoveryReceiver(DevicesView devicesView, TextView statusTextView) {
         this.devicesView = devicesView;
         this.statusTextView = statusTextView;
     }
@@ -35,9 +30,9 @@ public class BluetoothDiscoveryReceiver extends BroadcastReceiver {
         }
         else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
             devicesView.clear();
-            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+            /* Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
             if(pairedDevices.size() > 0)
-                devicesView.addMultipleDevices(pairedDevices);
+                devicesView.addMultipleDevices(pairedDevices); */
             statusTextView.setText(R.string.scanning);
             statusTextView.setTextColor(Color.GREEN);
         }

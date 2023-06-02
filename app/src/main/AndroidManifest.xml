@@ -47,6 +47,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".android.DuelJoinActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".android.MultiplayerHostActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".android.MultiplayerJoinActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <receiver
             android:name=".bluetooth.BluetoothDiscoveryReceiver"
             android:exported="false" >
