@@ -18,7 +18,7 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DuelJoinActivityBinding binding = DuelJoinActivityBinding.inflate(getLayoutInflater());
-        DevicesView devicesView = new DevicesView();
+        DevicesView devicesView = new DevicesView(bluetoothAdapter);
         receiver = new BluetoothDiscoveryReceiver(devicesView, binding.scanStateTextView);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_FOUND);

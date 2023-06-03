@@ -13,6 +13,11 @@ public class BluetoothException extends RuntimeException {
         this.errorType = errorType;
     }
 
+    public BluetoothException(BluetoothError errorType, Exception e) {
+        super(e);
+        this.errorType = errorType;
+    }
+
     public BluetoothError getErrorType() {
         return errorType;
     }

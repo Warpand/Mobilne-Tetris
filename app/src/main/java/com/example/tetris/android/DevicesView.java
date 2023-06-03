@@ -1,6 +1,7 @@
 package com.example.tetris.android;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.util.Log;
@@ -36,6 +37,11 @@ public class DevicesView extends RecyclerView.Adapter<DevicesView.DeviceRep> {
 
     private final ArrayList<BluetoothDevice> content = new ArrayList<>();
     private final HashSet<BluetoothDevice> devices = new HashSet<>();
+    private final BluetoothAdapter adapter;
+
+    public DevicesView(BluetoothAdapter adapter) {
+        this.adapter = adapter;
+    }
 
     @NonNull
     @Override
@@ -56,6 +62,14 @@ public class DevicesView extends RecyclerView.Adapter<DevicesView.DeviceRep> {
             Log.e("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
         }
         holder.joinButton.setOnClickListener(view -> {
+            if(adapter != null) {
+                try {
+                    adapter.cancelDiscovery();
+                }
+                catch (SecurityException e) {
+                    Log.e("BLUETOOTH", "Security", e);
+                }
+            }
             BluetoothConnect connector = new BluetoothConnect(
                     device,
                     view.getContext(),

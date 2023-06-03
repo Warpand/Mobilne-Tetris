@@ -1,36 +1,48 @@
 package com.example.tetris.android;
 
-import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tetris.bluetooth.BluetoothSocketWrapper;
 import com.example.tetris.bluetooth.GlobalSocketStash;
-import com.example.tetris.databinding.MultiplayerHostActivityBinding;
-
-import java.io.IOException;
+import com.example.tetris.core.GameEvent;
+import com.example.tetris.core.MultiplayerHostGameEngine;
+import com.example.tetris.core.MultiplayerMessage;
+import com.example.tetris.databinding.MultiplayerJoinActivityBinding;
 
 public class MultiplayerHostActivity extends AppCompatActivity {
-    private BluetoothSocket socket;
+    private BluetoothSocketWrapper socket;
+    private MultiplayerHostGameEngine gameEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        socket = GlobalSocketStash.obtain();
+        socket = new BluetoothSocketWrapper(GlobalSocketStash.obtain());
 
-        MultiplayerHostActivityBinding binding = MultiplayerHostActivityBinding.inflate(getLayoutInflater());
+        MultiplayerJoinActivityBinding binding = MultiplayerJoinActivityBinding.inflate(getLayoutInflater());
+        gameEngine = new MultiplayerHostGameEngine(socket);
+        gameEngine.registerObserver(binding.dummy);
         setContentView(binding.getRoot());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameEngine.registerEvent(new GameEvent.SetSpeedEvent(false));
+        gameEngine.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameEngine.stop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            socket.close();
-        }
-        catch (IOException e) {
-            Log.e("ACTIVITY", "socket.close() failed", e);
-        }
+        socket.write(new MultiplayerMessage(MultiplayerMessage.TYPE_DONE, new byte[0]));
+        socket.close();
     }
 }
