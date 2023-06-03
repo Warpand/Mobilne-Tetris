@@ -38,7 +38,7 @@ public class BluetoothSocketServer extends Thread {
                 socket = server.accept();
             }
             catch(IOException e) {
-                Log.e("BLUETOOTH SERVER", "accept() failed", e);
+                Log.e("BLUETOOTH SERVER", "BluetoothSocket::accept failed", e);
             }
             if(socket != null) {
                 GlobalSocketStash.stash(socket);
@@ -54,7 +54,7 @@ public class BluetoothSocketServer extends Thread {
             server.close();
         }
         catch (IOException e) {
-            Log.e("BLUETOOTH SERVER", "close() failed", e);
+            Log.w("BLUETOOTH SERVER", "Exception from BluetoothServerSocket::close");
         }
     }
 }

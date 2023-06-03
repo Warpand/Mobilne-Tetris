@@ -32,7 +32,7 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
                     server.start();
                 }
                 catch(SecurityException e) {
-                    Log.e("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
+                    Log.e("BLUETOOTH", "Security error", e);
                 }
             }
         );

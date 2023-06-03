@@ -8,6 +8,7 @@ public class MultiplayerJoinGameEngine extends AbstractGameEngine implements Gam
         super(new Dummies.DummyLogicManager(), new Dummies.DummyDrawingManager());
         this.socketWrapper = socketWrapper;
     }
+
     @Override
     protected void performFrame() {
         MultiplayerMessage msg = socketWrapper.read();

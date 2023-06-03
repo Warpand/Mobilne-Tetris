@@ -25,7 +25,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
             output = socket.getOutputStream();
         }
         catch (IOException e) {
-            Log.e("BLUETOOTH", "Could not obtain the streams", e);
+            Log.e("BLUETOOTH", "Could not obtain the streams");
             throw new BluetoothException(BluetoothError.UNKNOWN, e);
         }
         msgQueue = new LinkedBlockingQueue<>();
@@ -39,7 +39,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
             output.write(m.toRawMessage());
         }
         catch (IOException e) {
-            Log.d("BLUETOOTH", "Could not write to the socket");
+            Log.e("BLUETOOTH", "Error while writing to the socket's stream", e);
         }
     }
 
@@ -53,7 +53,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
         try {
             return msgQueue.take();
         } catch (InterruptedException e) {
-            Log.e("BLUETOOTH", "Interrupted while performing a blocking read", e);
+            Log.e("BLUETOOTH", "Interrupted while performing a blocking read");
             throw new RuntimeException(e);
         }
     }
@@ -83,7 +83,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
                 try {
                     bytesRead += input.read(buf, bytesRead, MultiplayerMessage.RAW_MSG_SIZE - bytesRead);
                 } catch (IOException e) {
-                    Log.d("BLUETOOTH", "Error while reading from socket's input");
+                    Log.w("BLUETOOTH", "Error while reading from socket's input");
                     return;
                 }
             }
@@ -92,6 +92,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
             }
             catch (InterruptedException e) {
                 Log.e("BLUETOOTH", "Error while putting a msg to the queue", e);
+                return;
             }
             if((int)buf[0] == MultiplayerMessage.TYPE_DONE)
                 return;

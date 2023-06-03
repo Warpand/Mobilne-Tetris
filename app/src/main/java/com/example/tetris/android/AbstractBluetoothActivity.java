@@ -18,20 +18,21 @@ import com.example.tetris.bluetooth.BluetoothError;
 
 public abstract class AbstractBluetoothActivity extends AppCompatActivity {
     protected BluetoothAdapter bluetoothAdapter;
+
     private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(),
-            isGranted -> {
-                if(!isGranted)
-                    toastForError(BluetoothError.PERMISSION_DENIED);
-            }
+        new ActivityResultContracts.RequestPermission(),
+        isGranted -> {
+            if(!isGranted)
+                toastForError(BluetoothError.PERMISSION_DENIED);
+        }
     );
 
     private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if(result.getResultCode() != RESULT_OK)
-                    toastForError(BluetoothError.BLUETOOTH_OFF);
-            }
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if(result.getResultCode() != RESULT_OK)
+                toastForError(BluetoothError.BLUETOOTH_OFF);
+        }
     );
 
     @Override
@@ -39,8 +40,6 @@ public abstract class AbstractBluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         bluetoothAdapter = getSystemService(BluetoothManager.class).getAdapter();
     }
-
-
 
     protected void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

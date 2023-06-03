@@ -4,7 +4,9 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -29,11 +31,15 @@ public class BluetoothConnect extends Thread {
 
     @Override
     public void run() {
+        Looper.prepare();
         try {
             socket.connect();
-        } catch (IOException connectException) {
+        }
+        catch (IOException connectException) {
             try {
                 socket.close();
+                Toast toast = Toast.makeText(context, "Could not connect.", Toast.LENGTH_SHORT);
+                toast.show();
             } catch (IOException closeException) {
                 Log.e("BLUETOOTH CLIENT", "Could not close the client socket", closeException);
             }
