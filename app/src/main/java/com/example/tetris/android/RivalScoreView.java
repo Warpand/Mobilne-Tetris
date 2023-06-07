@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.example.tetris.core.GameInfoPackage;
 import com.example.tetris.core.GameObserver;
@@ -44,7 +43,7 @@ public class RivalScoreView extends androidx.appcompat.widget.AppCompatTextView 
             }
             else {
                 setTextColor(Color.RED);
-                Log.d("SCOREVIEW", String.valueOf(score.get()));
+                // Log.d("SCOREVIEW", String.valueOf(score.get()));
             }
         }
         super.onDraw(canvas);

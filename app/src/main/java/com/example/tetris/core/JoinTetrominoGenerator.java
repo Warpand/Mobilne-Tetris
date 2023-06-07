@@ -39,7 +39,7 @@ public class JoinTetrominoGenerator implements TetrominoGenerator {
     }
 
     public boolean stateCritical() {
-        return !independent && tetrominoQueue.isEmpty();
+        return !independent && tetrominoQueue.size() < 2;
     }
 
     public void delivery(Collection<Integer> tetrominoIds) {

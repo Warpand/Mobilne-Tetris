@@ -3,6 +3,7 @@ package com.example.tetris.core;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MultiplayerJoinGameEngine extends AbstractGameEngine implements GameEngine {
     private final SocketWrapper socketWrapper;
@@ -12,6 +13,7 @@ public class MultiplayerJoinGameEngine extends AbstractGameEngine implements Gam
     private int previousRivalScore = 0;
     private int nextTetrominoId = Tetromino.MAX_TETROMINO_TYPE + 1;
     private boolean gameOverMsgSent = false;
+    private final AtomicBoolean discardEvents = new AtomicBoolean(false);
 
     public MultiplayerJoinGameEngine(GameLogicManager logicManager, GameDrawingManager drawingManager,
                                      SocketWrapper socketWrapper, JoinTetrominoGenerator tetrominoGenerator) {
@@ -27,10 +29,11 @@ public class MultiplayerJoinGameEngine extends AbstractGameEngine implements Gam
         MultiplayerMessage msg;
         if((msg = socketWrapper.read()) != null)
             handleMessage(msg);
-        while(tetrominoGenerator.stateCritical()) {
-            msg = socketWrapper.readBlocking();
-            handleMessage(msg);
+        if(tetrominoGenerator.stateCritical()) {
+            discardEvents.set(true);
+            return;
         }
+        discardEvents.set(false);
         GameEvent event;
         while((event = eventQueue.poll()) != null) {
             event.execute(logicManager);
@@ -75,5 +78,12 @@ public class MultiplayerJoinGameEngine extends AbstractGameEngine implements Gam
             default:
                 Log.e("Message", "Message of bad type received by the game engine");
         }
+    }
+
+    @Override
+    public void registerEvent(GameEvent event) {
+        if(discardEvents.get() && !(event instanceof GameEvent.PauseEvent) && !(event instanceof GameEvent.SetSpeedEvent))
+            return;
+        super.registerEvent(event);
     }
 }
