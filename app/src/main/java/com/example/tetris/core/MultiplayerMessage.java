@@ -43,11 +43,22 @@ public class MultiplayerMessage {
         return new MultiplayerMessage(raw[0], content);
     }
 
+    /* Low level tricks */
     public int toScore() {
-        return Integer.parseInt(new String(content));
+        int b24 = content[0];
+        int b16 = content[1];
+        int b8 = content[2];
+        int b = content[3];
+        return (b24 << 24) | (b16 << 16) | (b8 << 8) | b;
     }
+
     public static MultiplayerMessage fromScore(int score) {
         return new MultiplayerMessage(MultiplayerMessage.TYPE_RIVAL_SCORE_CHANGE,
-                String.valueOf(score).getBytes());
+                new byte[] {
+                        (byte)(score >> 24),
+                        (byte)(score >> 16),
+                        (byte)(score >> 8),
+                        (byte)score
+                });
     }
 }
