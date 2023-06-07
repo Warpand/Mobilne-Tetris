@@ -13,8 +13,6 @@ import com.example.tetris.bluetooth.GlobalSocketStash;
 import com.example.tetris.core.GameEngine;
 import com.example.tetris.core.GameEngineFactory;
 import com.example.tetris.core.GameEvent;
-import com.example.tetris.core.MultiplayerJoinGameEngine;
-import com.example.tetris.core.MultiplayerMessage;
 import com.example.tetris.core.Settings;
 import com.example.tetris.databinding.MultiPlayerActivityBinding;
 import com.example.tetris.media.Dummies;
@@ -88,7 +86,6 @@ public class MultiplayerJoinActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        socket.write(new MultiplayerMessage(MultiplayerMessage.TYPE_DONE, new byte[0]));
         socket.close();
     }
 }

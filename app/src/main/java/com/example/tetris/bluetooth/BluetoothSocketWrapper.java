@@ -89,7 +89,14 @@ public class BluetoothSocketWrapper implements SocketWrapper {
                 try {
                     bytesRead += input.read(buf, bytesRead, MultiplayerMessage.RAW_MSG_SIZE - bytesRead);
                 } catch (IOException e) {
+                    // this should actually sometimes happen
                     Log.w("BLUETOOTH", "Error while reading from socket's input");
+                    try {
+                        msgQueue.put(new MultiplayerMessage(MultiplayerMessage.TYPE_DONE, new byte[0]));
+                    }
+                    catch (InterruptedException ie) {
+                        Log.e("BLUETOOTH", "Error while putting a msg to the queue", ie);
+                    }
                     return;
                 }
             }

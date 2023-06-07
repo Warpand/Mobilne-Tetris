@@ -78,7 +78,12 @@ public interface GameEngineFactory {
             else
                 speedManager = new SpeedManager.ConstantSpeedManagerHard();
             socketWrapper.write(new MultiplayerMessage(MultiplayerMessage.TYPE_TETROMINO_BATCH,
-                    new byte[]{(byte)tetrominoGenerator.getForRival(), (byte)tetrominoGenerator.getForRival()}));
+                    new byte[]{
+                            (byte)tetrominoGenerator.getForRival(),
+                            (byte)tetrominoGenerator.getForRival(),
+                            (byte)tetrominoGenerator.getForRival(),
+                            (byte)tetrominoGenerator.getForRival()
+            }));
             GameLogicManager logicManager = new GameLogicManagerImpl(
                     tetrominoGenerator,
                     new OriginalGravityManager(),
@@ -130,8 +135,8 @@ public interface GameEngineFactory {
                 throw new RuntimeException();
             }
             ArrayList<Integer> tetrominoIds = new ArrayList<>();
-            tetrominoIds.add(msg.at(0));
-            tetrominoIds.add(msg.at(1));
+            for(int i = 0; i < msg.size(); i++)
+                tetrominoIds.add(msg.at(i));
             tetrominoGenerator.delivery(tetrominoIds);
             GameLogicManager logicManager = new GameLogicManagerImpl(
                     tetrominoGenerator,
