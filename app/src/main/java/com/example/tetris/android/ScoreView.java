@@ -35,7 +35,9 @@ public class ScoreView extends androidx.appcompat.widget.AppCompatTextView imple
     @Override
     protected void onDraw(Canvas canvas) {
         if(outdated.compareAndSet(true, false)) {
-            String text = "Score:\n" + score.get();
+            String oldText = getText().toString();
+            // String text = "Score:\n" + score.get();
+            String text = oldText.substring(0, oldText.indexOf('\n')) + '\n' + score.get();
             super.setText(text);
         }
         super.onDraw(canvas);

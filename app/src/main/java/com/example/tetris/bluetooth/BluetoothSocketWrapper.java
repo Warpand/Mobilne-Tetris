@@ -17,6 +17,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
     private final InputStream input;
     private final OutputStream output;
     private final BlockingQueue<MultiplayerMessage> msgQueue;
+    private boolean closed = false;
 
     public BluetoothSocketWrapper(BluetoothSocket socket) {
         this.socket = socket;
@@ -35,6 +36,8 @@ public class BluetoothSocketWrapper implements SocketWrapper {
 
     @Override
     public void write(MultiplayerMessage m) {
+        if(closed)
+            return;
         try {
             output.write(m.toRawMessage());
         }
@@ -60,6 +63,8 @@ public class BluetoothSocketWrapper implements SocketWrapper {
 
     @Override
     public void close() {
+        if(closed)
+            return;
         try {
             input.close();
             output.close();
@@ -73,6 +78,7 @@ public class BluetoothSocketWrapper implements SocketWrapper {
         catch (IOException e) {
             Log.e("BLUETOOTH", "Exception while closing the socket", e);
         }
+        closed = true;
     }
 
     private void readFromSocket() {

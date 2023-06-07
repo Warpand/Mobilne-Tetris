@@ -22,7 +22,6 @@ public class SinglePlayerActivity extends AppCompatActivity {
     private GameEngine gameEngine;
     private SensorManager sensorManager;
     private RotationSensor rotationSensor;
-
     private MediaHolder media;
 
     @Override

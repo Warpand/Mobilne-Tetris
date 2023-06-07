@@ -3,6 +3,11 @@ package com.example.tetris.core;
 public class MultiplayerMessage {
     public static final int RAW_MSG_SIZE = 16;
     public static final int TYPE_DONE = 0;
+    public static final int TYPE_SETTINGS = 1;
+    public static final int TYPE_TETROMINO_REQUEST = 2;
+    public static final int TYPE_TETROMINO_BATCH = 3;
+    public static final int TYPE_RIVAL_SCORE_CHANGE = 4;
+    public static final int TYPE_RIVAL_GAME_OVER = 5;
 
     private final int type;
     private final byte[] content;
@@ -36,5 +41,13 @@ public class MultiplayerMessage {
         byte[] content = new byte[raw[1]];
         System.arraycopy(raw, 2, content, 0, raw[1]);
         return new MultiplayerMessage(raw[0], content);
+    }
+
+    public int toScore() {
+        return Integer.parseInt(new String(content));
+    }
+    public static MultiplayerMessage fromScore(int score) {
+        return new MultiplayerMessage(MultiplayerMessage.TYPE_RIVAL_SCORE_CHANGE,
+                String.valueOf(score).getBytes());
     }
 }

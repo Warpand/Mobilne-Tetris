@@ -2,6 +2,8 @@
     <string name="app_name">Tetris</string>
     <string name="single_player">Single Player</string>
     <string name="initScoreViewText">Score:\n0</string>
+    <string name="initRivalScoreViewText">Rival Score:\n0</string>
+    <string name="initYourScoreViewText">Your Score:\n0</string>
     <string name="duel_host">Duel - Host</string>
     <string name="duel_join">Duel - Join</string>
     <string name="settings">Settings</string>

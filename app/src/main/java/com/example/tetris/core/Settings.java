@@ -88,6 +88,20 @@ public class Settings {
         return speed;
     }
 
+    public MultiplayerMessage getMessage() {
+        byte[] info = new byte[]{(byte)generator, (byte)speed};
+        return new MultiplayerMessage(MultiplayerMessage.TYPE_SETTINGS, info);
+    }
+
+    public void updateFromMessage(MultiplayerMessage msg) {
+        if(msg.getType() != MultiplayerMessage.TYPE_SETTINGS) {
+            Log.e("Settings", "Improper message type");
+            throw new RuntimeException();
+        }
+        generator = msg.at(0);
+        speed = msg.at(1);
+    }
+
     public static class SettingsWriter extends Settings {
         public SettingsWriter(Context context) {
             super(context);

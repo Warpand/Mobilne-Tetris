@@ -4,17 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class SinglePlayerTetrominoGeneratorTest {
+public class BasicTetrominoGeneratorTest {
     @Test
     public void testGetAfterNextReturnsCorrectly() {
-        SinglePlayerTetrominoGenerator gen = new SinglePlayerTetrominoGenerator();
+        BasicTetrominoGenerator gen = new BasicTetrominoGenerator();
         int n = gen.next();
         assertEquals(n, gen.get());
     }
 
     @Test
     public void testSubsequentNextDoNotChange() {
-        SinglePlayerTetrominoGenerator gen = new SinglePlayerTetrominoGenerator();
+        BasicTetrominoGenerator gen = new BasicTetrominoGenerator();
         int n = gen.next();
         assertEquals(n, gen.next());
     }
