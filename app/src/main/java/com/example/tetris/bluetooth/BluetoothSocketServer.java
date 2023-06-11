@@ -32,21 +32,17 @@ public class BluetoothSocketServer extends Thread {
 
     @Override
     public void run() {
-        BluetoothSocket socket = null;
-        while(true) {
-            try {
-                socket = server.accept();
-            }
-            catch(IOException e) {
-                Log.e("BLUETOOTH SERVER", "BluetoothSocket::accept failed", e);
-            }
-            if(socket != null) {
-                GlobalSocketStash.stash(socket);
-                close();
-                context.startActivity(intent);
-                break;
-            }
+        BluetoothSocket socket;
+        try {
+            socket = server.accept();
         }
+        catch(IOException e) {
+            Log.w("BLUETOOTH SERVER", "BluetoothSocket::accept failed", e);
+            return;
+        }
+        GlobalSocketStash.stash(socket);
+        close();
+        context.startActivity(intent);
     }
 
     public void close() {
