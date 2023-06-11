@@ -32,17 +32,23 @@ public class BluetoothSocketServer extends Thread {
 
     @Override
     public void run() {
-        BluetoothSocket socket;
-        try {
-            socket = server.accept();
+        BluetoothSocket socket = null;
+        while(true) {
+            try {
+                socket = server.accept();
+            } catch (NullPointerException nullPointerException) {
+                // close was called by Activity::onDestroy
+                break;
+            } catch (IOException e) {
+                Log.w("BLUETOOTH SERVER", "BluetoothSocket::accept failed", e);
+            }
+            if(socket != null) {
+                GlobalSocketStash.stash(socket);
+                close();
+                context.startActivity(intent);
+                break;
+            }
         }
-        catch(IOException e) {
-            Log.w("BLUETOOTH SERVER", "BluetoothSocket::accept failed", e);
-            return;
-        }
-        GlobalSocketStash.stash(socket);
-        close();
-        context.startActivity(intent);
     }
 
     public void close() {
@@ -50,7 +56,11 @@ public class BluetoothSocketServer extends Thread {
             server.close();
         }
         catch (IOException e) {
-            Log.w("BLUETOOTH SERVER", "Exception from BluetoothServerSocket::close");
+            Log.e("BLUETOOTH SERVER", "Exception from BluetoothServerSocket::close");
         }
+        catch (NullPointerException nullPointerException) {
+            return;
+        }
+        server = null;
     }
 }
