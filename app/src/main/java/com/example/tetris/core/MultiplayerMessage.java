@@ -1,5 +1,8 @@
 package com.example.tetris.core;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 public class MultiplayerMessage {
     public static final int RAW_MSG_SIZE = 16;
     public static final int TYPE_DONE = 0;
@@ -45,20 +48,11 @@ public class MultiplayerMessage {
 
     /* Low level tricks */
     public int toScore() {
-        int b24 = content[0];
-        int b16 = content[1];
-        int b8 = content[2];
-        int b = content[3];
-        return (b24 << 24) | (b16 << 16) | (b8 << 8) | b;
+        return ByteBuffer.wrap(content).order(ByteOrder.BIG_ENDIAN).getInt();
     }
 
     public static MultiplayerMessage fromScore(int score) {
         return new MultiplayerMessage(MultiplayerMessage.TYPE_RIVAL_SCORE_CHANGE,
-                new byte[] {
-                        (byte)(score >>> 24),
-                        (byte)(score >>> 16),
-                        (byte)(score >>> 8),
-                        (byte)score
-                });
+                ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(score).array());
     }
 }
