@@ -16,15 +16,20 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.tetris.bluetooth.BluetoothError;
 
+import java.util.ArrayList;
+
 public abstract class AbstractBluetoothActivity extends AppCompatActivity {
     protected BluetoothAdapter bluetoothAdapter;
 
-    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
-        new ActivityResultContracts.RequestPermission(),
-        isGranted -> {
-            if(!isGranted)
-                toastForError(BluetoothError.PERMISSION_DENIED);
-        }
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(),
+            permissions -> {
+                boolean areGranted = true;
+                for(boolean isGranted : permissions.values())
+                    areGranted &= isGranted;
+                if(!areGranted)
+                    toastForError(BluetoothError.PERMISSION_DENIED);
+            }
     );
 
     private final ActivityResultLauncher<Intent> requestBluetoothLauncher = registerForActivityResult(
@@ -42,23 +47,30 @@ public abstract class AbstractBluetoothActivity extends AppCompatActivity {
     }
 
     protected void checkPermissions() {
+        ArrayList<String> permissionsList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_SCAN);
+                permissionsList.add(Manifest.permission.BLUETOOTH_SCAN);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
+                permissionsList.add(Manifest.permission.BLUETOOTH_CONNECT);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADVERTISE) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_ADVERTISE);
+                permissionsList.add(Manifest.permission.BLUETOOTH_ADVERTISE);
         } else {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH);
+                permissionsList.add(Manifest.permission.BLUETOOTH);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED)
-                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_ADMIN);
+                permissionsList.add(Manifest.permission.BLUETOOTH_ADMIN);
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+            permissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+            permissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if(!permissionsList.isEmpty()) {
+            String[] requestedPermissions = new String[permissionsList.size()];
+            for(int i = 0; i < permissionsList.size(); i++)
+                requestedPermissions[i] = permissionsList.get(i);
+            requestPermissionLauncher.launch(requestedPermissions);
+        }
     }
 
     protected void turnBluetoothOn() {

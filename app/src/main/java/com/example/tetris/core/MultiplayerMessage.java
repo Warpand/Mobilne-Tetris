@@ -55,9 +55,9 @@ public class MultiplayerMessage {
     public static MultiplayerMessage fromScore(int score) {
         return new MultiplayerMessage(MultiplayerMessage.TYPE_RIVAL_SCORE_CHANGE,
                 new byte[] {
-                        (byte)(score >> 24),
-                        (byte)(score >> 16),
-                        (byte)(score >> 8),
+                        (byte)(score >>> 24),
+                        (byte)(score >>> 16),
+                        (byte)(score >>> 8),
                         (byte)score
                 });
     }

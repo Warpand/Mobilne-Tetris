@@ -36,7 +36,7 @@ public class DuelJoinActivity extends AbstractBluetoothActivity {
                         bluetoothAdapter.startDiscovery();
                     }
                     catch(SecurityException e) {
-                        Log.e("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
+                        Log.i("BLUETOOTH", "SECURITY PERMISSIONS WERE DENIED", e);
                     }
                 }
         );

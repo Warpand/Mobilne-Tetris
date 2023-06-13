@@ -67,6 +67,7 @@ public class MultiplayerJoinGameEngine extends AbstractGameEngine implements Gam
                 for(int i = 0; i < msg.size(); i++)
                     tetrominoList.add(msg.at(i));
                 tetrominoGenerator.delivery(tetrominoList);
+                break;
             case MultiplayerMessage.TYPE_RIVAL_GAME_OVER:
                 rivalScore = -1;
                 break;

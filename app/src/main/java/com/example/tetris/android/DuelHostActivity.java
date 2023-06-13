@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.tetris.bluetooth.BluetoothError;
 import com.example.tetris.bluetooth.BluetoothSocketServer;
 import com.example.tetris.databinding.DuelHostActivityBinding;
 
@@ -24,6 +23,8 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
                 discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
                 try {
                     startActivity(discoverableIntent);
+                    if(server != null)
+                        server.close();
                     server = new BluetoothSocketServer(
                             bluetoothAdapter,
                             this,
@@ -32,19 +33,12 @@ public class DuelHostActivity extends AbstractBluetoothActivity {
                     server.start();
                 }
                 catch(SecurityException e) {
-                    Log.e("BLUETOOTH", "Security error", e);
+                    Log.i("BLUETOOTH", "Security error", e);
                 }
             }
         );
 
         setContentView(binding.getRoot());
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED)
-            toastForError(BluetoothError.USER_DENIED_OPERATION);
     }
 
     @Override
